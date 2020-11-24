@@ -1,0 +1,7 @@
+target_image,distractor_image1,distractor_image2,distractor_image3,english_audio,type,condition
+airplane.jpg,white.png,white.png,white.png,silence.wav,PictureLook1,PictureLook
+balloon.jpg,white.png,white.png,white.png,silence.wav,PictureLook1,PictureLook
+letter.jpg,car.jpg,backpack.jpg,wheelchair.jpg,Sarah_engels_Mary_steals_a_letter_0.wav,Experimental,Neutral
+carrot.jpg,dress.jpg,napkin.jpg,ruler.jpg,Sarah_engels_Mary_grabs_a_carrot_0.wav,Experimental,Neutral
+cheese.jpg,mailbox.jpg,desk.jpg,bottle2.jpg,Sarah_engels_Mary_cuts_a_cheese_0.wav,Experimental,Constraining
+wall.jpg,lock.jpg,heel.jpg,shower1.jpg,Sarah_engels_Mary_climbs_a_wall_0.wav,Experimental,Constraining
