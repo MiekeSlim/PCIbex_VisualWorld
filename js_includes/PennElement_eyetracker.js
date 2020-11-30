@@ -121,14 +121,16 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
         past50Array = [[], []];                 // To keep track of 50 last looks
         let calibrationDiv = $("<div>").css({
             position: 'absolute', left: "1.5vw", top: "1.5vh", width: "97vw", height: "97vh",
-            'background-color': 'white', 'text-align': 'center',
+            'background-color': 'white', 'text-align': 'center'
         });
         // Will print a button in the middle of the screen
         let startCalculation = ()=>{
             calibrationDiv.find('button').remove();
-            calibrationDiv.append($("<button>Click here!</button>").css({
+            calibrationDiv.append($("<button>Click on me!</button>").css({
                 position: 'absolute', top: 'calc(0.5*97vh - 0.0125*97vw)', bottom: 'calc(0.4875*97vw)', width: "2.5vw", height: "2.5vw",  color: "red", 'background-color': 'pink'
             }).click(function(){
+            	$(this).remove();
+            	calibrationDiv.append($("<button>Look here!</button>");
                 // Launches calculation per se
                 $(this).attr('disabled', true);
                 storePoints = true;
