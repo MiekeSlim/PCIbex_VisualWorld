@@ -109,8 +109,6 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
         return Math.round(precision);
     };
 
-
-
     // Shows a calibration screen
     function calibrate(resolve, element, threshold, remainingAttempts){
         // Start training the model
@@ -129,8 +127,8 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
             calibrationDiv.append($("<button>Click on me!</button>").css({
                 position: 'absolute', top: 'calc(0.5*97vh - 0.0125*97vw)', bottom: 'calc(0.4875*97vw)', width: "2.5vw", height: "2.5vw",  color: "red", 'background-color': 'pink'
             }).click(function(){
-            	$(this).remove();
-            	calibrationDiv.append($("<button>Look here!</button>");
+            	calibrationDiv.find('button').remove();
+                calibrationDiv.append($("<button>Click on me!</button>");
                 // Launches calculation per se
                 $(this).attr('disabled', true);
                 storePoints = true;
