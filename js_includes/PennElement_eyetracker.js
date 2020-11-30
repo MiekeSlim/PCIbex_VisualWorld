@@ -126,12 +126,11 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
         // Will print a button in the middle of the screen
         let startCalculation = ()=>{
             calibrationDiv.find('button').remove();
-            calibrationDiv.append($("<button>+</button>").css({
-                position: 'absolute', top: 'calc(0.5*97vh - 0.0125*97vw)', bottom: 'calc(0.4875*97vw)', width: "2.5vw", height: "2.5vw",  color: "red"
+            calibrationDiv.append($("<button>Click on me!</button>").css({
+                position: 'absolute', top: 'calc(0.5*97vh - 0.0125*97vw)', bottom: 'calc(0.4875*97vw)', width: "2.5vw", height: "2.5vw",  color: "red", 'background-color': 'pink'
             }).click(function(){
                 // Launches calculation per se
-                $(this).append($("<button>Look here!</button>").css({
-                position: 'absolute', top: 'calc(0.5*97vh - 0.0125*97vw)', bottom: 'calc(0.4875*97vw)', width: "2.5vw", height: "2.5vw",  color: "red"})
+                $(this).attr('disabled', true);
                 storePoints = true;
                 setTimeout(()=>{
                     console.log("Past 50", past50Array);
@@ -201,28 +200,28 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                 showTracker(false);
                 // getGazer().showPredictionPoints(true);
                 calibrationDiv
-                    .append($("<button>+</button>").css({
+                    .append($("<button>Click on me!</button>").css({
                         position: 'absolute', top: 0, left: 0, width: "2.5vw", height: "2.5vw"
                     }).click(click))
-                    .append($("<button>+</button>").css({
+                    .append($("<button>Click on me!</button>").css({
                         position: 'absolute', top: 0, right: 0, width: "2.5vw", height: "2.5vw"
                     }).click(click))
-                    .append($("<button>+</button>").css({
+                    .append($("<button>Click on me!</button>").css({
                         position: 'absolute', bottom: 0, left: 0, width: "2.5vw", height: "2.5vw"
                     }).click(click))
-                    .append($("<button>+</button>").css({
+                    .append($("<button>Click on me!</button>").css({
                         position: 'absolute', bottom: 0, right: 0, width: "2.5vw", height: "2.5vw"
                     }).click(click))
-                    .append($("<button>+</button>").css({
+                    .append($("<button>Click on me!</button>").css({
                         position: 'absolute', top: 'calc(50vh - 1.25vw)', left: 0, width: "2.5vw", height: "2.5vw"
                     }).click(click))
-                    .append($("<button>+</button>").css({
+                    .append($("<button>Click on me!</button>").css({
                         position: 'absolute', top: 0, left: '48.75vw', width: "2.5vw", height: "2.5vw"
                     }).click(click))
-                    .append($("<button>+</button>").css({
+                    .append($("<button>Click on me!</button>").css({
                         position: 'absolute', top: 'calc(50vh - 1.25vw)', right: 0, width: "2.5vw", height: "2.5vw"
                     }).click(click))
-                    .append($("<button>+</button>").css({
+                    .append($("<button>Click on me!</button>").css({
                         position: 'absolute', bottom: 0, left: '48.75vw', width: "2.5vw", height: "2.5vw"
                     }).click(click));
             }));
