@@ -129,7 +129,6 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
             }).click(function(){
                 // Launches calculation per se
                 $(this).attr('disabled', true);
-                calibrationDiv.find('button').remove();
                 calibrationDiv.append($("<button>Click on me!</button>");
                 storePoints = true;
                 setTimeout(()=>{
