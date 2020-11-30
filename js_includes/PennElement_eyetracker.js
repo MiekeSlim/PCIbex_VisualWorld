@@ -1,6 +1,9 @@
 // EYETRACKER element
 /* $AC$ PennController.newEyeTracker(name) Creates a new EyeTracker element $AC$ */
 /* $AC$ PennController.getEyeTracker(name) Retrieves an existing EyeTracker element $AC$ */
+var Hres = "400px"		// height of the set screen (in px)
+var Wres = "300px"		// width of the set screen (in px)
+
 window.PennController._AddElementType("EyeTracker", function(PennEngine) {
 
     let tracker;
@@ -107,6 +110,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
     };
 
 
+
     // Shows a calibration screen
     function calibrate(resolve, element, threshold, remainingAttempts){
         // Start training the model
@@ -116,14 +120,14 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
         PennEngine.debug.log("Starting calibration");
         past50Array = [[], []];                 // To keep track of 50 last looks
         let calibrationDiv = $("<div>").css({
-            position: 'absolute', left: 0, top: 0, width: "100vw", height: "100vh",
+            position: 'absolute', left: "1.5vw", top: "1.5vh", width: "97vw", height: "97vh",
             'background-color': 'white', 'text-align': 'center'
         });
         // Will print a button in the middle of the screen
         let startCalculation = ()=>{
             calibrationDiv.find('button').remove();
             calibrationDiv.append($("<button>+</button>").css({
-                position: 'absolute', top: 'calc(50vh - 1.25vw)', bottom: '48.75vw', width: "2.5vw", height: "2.5vw"
+                position: 'absolute', top: 'calc(0.5*97vh - 0.0125*97vw)', bottom: 'calc(0.4875*97vw)', width: "2.5vw", height: "2.5vw", background-color: #2ba805
             }).click(function(){
                 // Launches calculation per se
                 $(this).attr('disabled', true);
