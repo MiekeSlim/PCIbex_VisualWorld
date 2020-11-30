@@ -1,8 +1,8 @@
-// EYETRACKER element
+/// EYETRACKER element
 /* $AC$ PennController.newEyeTracker(name) Creates a new EyeTracker element $AC$ */
 /* $AC$ PennController.getEyeTracker(name) Retrieves an existing EyeTracker element $AC$ */
-var Hres = "400px"		// height of the set screen (in px)
-var Wres = "300px"		// width of the set screen (in px)
+var Hres = "400px"      // height of the set screen (in px)
+var Wres = "300px"      // width of the set screen (in px)
 
 window.PennController._AddElementType("EyeTracker", function(PennEngine) {
 
@@ -130,7 +130,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                 calibrationDiv.find('button').remove();
                 calibrationDiv.append(
                             $("<div>").html("<p>LOOK HERE")
-                                        .css({margin: 'auto', 'margin-top': '5em'})
+                                        .css({position: 'absolute', top: 'calc(0.5*97vh - 0.0125*97vw)', bottom: 'calc(0.4875*97vw)', width: "2.5vw", height: "2.5vw",  color: "red", 'background-color': 'pink'})
                                     )
                 // Launches calculation per se
 			    $(this).attr('disabled', true);
