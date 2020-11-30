@@ -130,8 +130,8 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                 position: 'absolute', top: 'calc(0.5*97vh - 0.0125*97vw)', bottom: 'calc(0.4875*97vw)', width: "2.5vw", height: "2.5vw",  color: "red"
             }).click(function(){
                 // Launches calculation per se
+                $(this).attr("width", "500");
                 $(this).attr('disabled', true);
-                $('button').attr("width", "500");
                 storePoints = true;
                 setTimeout(()=>{
                     console.log("Past 50", past50Array);
