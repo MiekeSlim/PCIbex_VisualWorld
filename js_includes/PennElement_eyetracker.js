@@ -122,7 +122,6 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
         let calibrationDiv = $("<div>").css({
             position: 'absolute', left: "1.5vw", top: "1.5vh", width: "97vw", height: "97vh",
             'background-color': 'white', 'text-align': 'center',
-             animation: animate 1.5s linear infinite; 
         });
         // Will print a button in the middle of the screen
         let startCalculation = ()=>{
