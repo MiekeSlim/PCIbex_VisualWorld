@@ -121,6 +121,11 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
             position: 'absolute', left: "1.5vw", top: "1.5vh", width: "97vw", height: "97vh",
             'background-color': 'white', 'text-align': 'center'
         });
+        var ofs = 0;
+        window.setInterval(function(){
+		    calibrationDiv.style.background = 'rgba(255,0,0,'+Math.abs(Math.sin(ofs))+')';
+		    ofs += 0.01;
+		}, 10);
         // Will print a button in the middle of the screen
         let startCalculation = ()=>{
             calibrationDiv.find('button').remove();
@@ -128,8 +133,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                 position: 'absolute', top: 'calc(0.5*97vh - 0.0125*97vw)', bottom: 'calc(0.4875*97vw)', width: "2.5vw", height: "2.5vw",  color: "red", 'background-color': 'pink'
             }).click(function(){
                 // Launches calculation per se
-			  //  $(this).attr('disabled', true);
-              calibrationDiv.append($("<div>")).css('background-color': 'yellow');
+			    $(this).attr('disabled', true);
                 storePoints = true;
                 setTimeout(()=>{
                     console.log("Past 50", past50Array);
