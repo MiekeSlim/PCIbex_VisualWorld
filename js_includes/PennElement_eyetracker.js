@@ -128,6 +128,10 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                 position: 'absolute', top: 'calc(0.5*97vh - 0.0125*97vw)', bottom: 'calc(0.4875*97vw)', width: "2.5vw", height: "2.5vw",  color: "red", 'background-color': 'pink'
             }).click(function(){
                 calibrationDiv.find('button').remove();
+                calibrationDiv.append(
+                            $("<div>").html("<p>LOOK HERE")
+                                        .css({margin: 'auto', 'margin-top': '5em'})
+                                    )
                 // Launches calculation per se
 			    $(this).attr('disabled', true);
                 storePoints = true;
