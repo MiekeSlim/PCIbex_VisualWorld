@@ -129,6 +129,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
             }).click(function(){
                 // Launches calculation per se
 			  //  $(this).attr('disabled', true);
+                $(this).css('background-color': 'yellow');
                 storePoints = true;
                 setTimeout(()=>{
                     console.log("Past 50", past50Array);
