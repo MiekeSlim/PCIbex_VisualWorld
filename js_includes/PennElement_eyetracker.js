@@ -130,7 +130,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                 // Launches calculation per se
         $(this).attr('disabled', true);
         calibrationDiv.find('button').remove();
-        calibrationDiv.append($("<p> Look here! <\p>").css({position: 'absolute', top: 'calc(0.5*97vh - 0.0125*97vw)', left: 'calc(0.4875*97vw)'}));    
+        calibrationDiv.append($("<p> Look<br>here! <\p>").css({position: 'absolute', top: 'calc(0.5*97vh - 0.0125*97vw)', left: 'calc(0.4875*97vw)'}));    
                 storePoints = true;
                 setTimeout(()=>{
                     console.log("Past 50", past50Array);
