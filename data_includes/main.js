@@ -7,7 +7,7 @@ AddHost("https://users.ugent.be/~mslim/VW_DWR_Stimuli/images/");
 // PHP script that receives, stores (and will also output) the eye-tracking data
 EyeTrackerURL("https://users.ugent.be/~mslim/PCIbexData/EyeTracker.php")
 
-Sequence( "Welcome1", "Welcome2", "CheckPreload", "AudioSetUp", "AudioCheck", "WebcamSetUp", "CalibrationSetUp", "Instructions", randomize("Experiment"), "QuestionnairePage", "Send",  "Final")
+//Sequence( "Welcome1", "Welcome2", "CheckPreload", "AudioSetUp", "AudioCheck", "WebcamSetUp", "CalibrationSetUp", "Instructions", randomize("Experiment"), "QuestionnairePage", "Send",  "Final")
 
 // Welcome page 1
 PennController("Welcome1",
@@ -141,7 +141,7 @@ newTrial("Instructions",
 )
 
 // Only run 2 first trials defined in the table
-Template("trials.csv", row =>
+Template("ListA.csv", row =>
     newTrial("Experiment",
         //show cursor     
         newFunction( ()=>{
