@@ -161,7 +161,7 @@ newTrial("Instructions",
 
 // Experimental trials
 Template("ListA.csv", row =>
-    newTrial("Experiment",
+    newTrial("Block1",
         //show cursor     
         newFunction( ()=>{
             $("body").css({
@@ -218,10 +218,10 @@ Template("ListA.csv", row =>
             .log()
             .play()
             .wait()
-         ,
-        getEyeTracker("tracker").stop() // Stop now to prevent collecting unnecessary data
         ,
         newTimer(250).start().wait()   
+         ,
+        getEyeTracker("tracker").stop() // Stop now to prevent collecting unnecessary data
         )
     .log( "target_image"        , row.Image1         )
     .log( "distractor_image1"   , row.Image2     )            
