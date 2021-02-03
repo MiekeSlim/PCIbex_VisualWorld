@@ -177,19 +177,19 @@ Template("ListA.csv", row =>
         ,
         // We print the four images at the four corners
         newCanvas("target_image", "40vw", "40vh")  // The Canvas are bigger than the images they contain
-            .add( "center at 50%" , "middle at 50%" , newImage(row.image1) )
+            .add( "center at 50%" , "middle at 50%" , newImage(row.Image1) )
             .print( "center at 25vw" , "middle at 25vh" )
         ,
         newCanvas("distractor_image1", "40vw", "40vh")
-            .add( "center at 50%" , "middle at 50%" , newImage(row.image2) )
+            .add( "center at 50%" , "middle at 50%" , newImage(row.Image2) )
             .print( "center at 25vw" , "middle at 75vh" )
         ,
         newCanvas("distractor_image2", "40vw", "40vh")
-            .add( "center at 50%" , "middle at 50%" , newImage(row.image3) )
+            .add( "center at 50%" , "middle at 50%" , newImage(row.Image3) )
             .print( "center at 75vw" , "middle at 25vh" )
         ,
         newCanvas("distractor_image3", "40vw", "40vh")
-            .add( "center at 50%" , "middle at 50%" , newImage(row.image4) )
+            .add( "center at 50%" , "middle at 50%" , newImage(row.Image4) )
             .print( "center at 75vw" , "middle at 75vh" )
         ,
         // Hide the mouse cursor
@@ -223,10 +223,10 @@ Template("ListA.csv", row =>
         ,
         newTimer(250).start().wait()   
         )
-    .log( "target_image"        , row.image1         )
-    .log( "distractor_image1"   , row.image2     )            
-    .log( "distractor_image2"   , row.image3         )   
-    .log( "distractor_image3"   , row.image4          )            
+    .log( "target_image"        , row.Image1         )
+    .log( "distractor_image1"   , row.Image2     )            
+    .log( "distractor_image2"   , row.Image3         )   
+    .log( "distractor_image3"   , row.Image4          )            
     .log( "sentence"            , row.Audio          )           
     .log( "type"                , row.StimulusType          )  
     .log( "condition"           , row.StimulusCondition         )       
