@@ -56,7 +56,7 @@ PennController("Welcome2",
         .print()
         .wait()
 )
-
+*/
 // Wait if the resources have not finished preloading by now
 CheckPreloaded("CheckPreload")
                
@@ -107,7 +107,7 @@ newTrial("AudioCheck",
         .print()
         .wait()
 )
-*/
+
 newTrial("WebcamSetUp", 
     newText("WebcamInstructions", "<p>Now that your audio is set, we need to calibrate your webcam so the experiment can follow your eye movements. On the next page, a calibration procedure will start. First, you will see the webcam recording on the top left corner of your screen. <br><br> Please make sure your face is fully visible. Glasses should not be a problem, but make sure that they are not reflecting any ambient light. Also, you can wear headphones.</p>")
     ,
