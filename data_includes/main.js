@@ -187,11 +187,6 @@ Template("ListA.csv", row =>
         ,
         getImage("backTF").remove(),getImage("backBF").remove(),getImage("backTM").remove(),getImage("backBM").remove()
         ,
-        newImage(row.pic1_suit).print( "center at 75%" , "middle at 50%" , getCanvas("topFemaleIA") ),
-        newImage(row.pic2_suit).print( "center at 75%" , "middle at 50%" , getCanvas("bottomFemaleIA") ),
-        newImage(row.pic3_suit).print( "center at 75%" , "middle at 50%" , getCanvas("topMaleIA") ),
-        newImage(row.pic4_suit).print( "center at 75%" , "middle at 50%" , getCanvas("bottomMaleIA") )
-        ,
         getEyeTracker("tracker")
             // We track the Canvas: making them bigger allows us to capture look-estimates slightly off the images themselves
             .add( getCanvas("topFemaleIA") , getCanvas("bottomFemaleIA") , getCanvas("topMaleIA") , getCanvas("bottomMaleIA") )
@@ -202,17 +197,10 @@ Template("ListA.csv", row =>
         ,
         newAudio("test", row.Audio).log().play()
         ,
-        newSelector("answer")
-            .add( getCanvas("topFemaleIA") , getCanvas("bottomFemaleIA") , getCanvas("topMaleIA") , getCanvas("bottomMaleIA") )
-            .once()
-            .log()
-            .wait()
+        newTimer(250).start().wait()
         ,
         getEyeTracker("tracker").stop() // Stop now to prevent collecting unnecessary data
-        ,
-        getAudio("test").wait("first")
-        ,
-        newTimer(250).start().wait()
+
     )
 )
 
