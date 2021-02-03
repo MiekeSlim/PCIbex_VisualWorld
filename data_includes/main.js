@@ -141,7 +141,7 @@ newTrial("CalibrationSetUp",
         .wait( newEyeTracker("tracker").test.ready() )
         .remove()
     ,
-    getEyeTracker("tracker").calibrate(5)
+    getEyeTracker("tracker").calibrate(60)
         .log()
 )
 
@@ -160,7 +160,7 @@ newTrial("Instructions",
 )
 
 // Experimental trials
-Template("trials.csv", row =>
+Template("ListA.csv", row =>
     newTrial("Experiment",
         //show cursor     
         newFunction( ()=>{
@@ -171,25 +171,25 @@ Template("trials.csv", row =>
            });
         }).call()
         ,    
-        newEyeTracker("tracker").calibrate(5)  // Make sure that the tracker is still calibrated
+        newEyeTracker("tracker").calibrate(60)  // Make sure that the tracker is still calibrated
         ,
         defaultImage.size("20vh", "20vh")
         ,
         // We print the four images at the four corners
         newCanvas("target_image", "40vw", "40vh")  // The Canvas are bigger than the images they contain
-            .add( "center at 50%" , "middle at 50%" , newImage(row.target_image) )
+            .add( "center at 50%" , "middle at 50%" , newImage(row.image1) )
             .print( "center at 25vw" , "middle at 25vh" )
         ,
         newCanvas("distractor_image1", "40vw", "40vh")
-            .add( "center at 50%" , "middle at 50%" , newImage(row.distractor_image1) )
+            .add( "center at 50%" , "middle at 50%" , newImage(row.image2) )
             .print( "center at 25vw" , "middle at 75vh" )
         ,
         newCanvas("distractor_image2", "40vw", "40vh")
-            .add( "center at 50%" , "middle at 50%" , newImage(row.distractor_image2) )
+            .add( "center at 50%" , "middle at 50%" , newImage(row.image3) )
             .print( "center at 75vw" , "middle at 25vh" )
         ,
         newCanvas("distractor_image3", "40vw", "40vh")
-            .add( "center at 50%" , "middle at 50%" , newImage(row.distractor_image3) )
+            .add( "center at 50%" , "middle at 50%" , newImage(row.image4) )
             .print( "center at 75vw" , "middle at 75vh" )
         ,
         // Hide the mouse cursor
@@ -214,7 +214,7 @@ Template("trials.csv", row =>
             .start()
             .log()  // IMPORTANT: if you don't log, the eye-tracking data will NOT get sent                    
         ,
-        newAudio("test", row.english_audio)
+        newAudio("test", row.Audio)
             .log()
             .play()
             .wait()
@@ -223,40 +223,16 @@ Template("trials.csv", row =>
         ,
         newTimer(250).start().wait()   
         )
-    .log( "target_image"        , row.target_image          )
-    .log( "distractor_image1"   , row.distractor_image1     )            
-    .log( "distractor_image2"   , row.distractor_image2          )   
-    .log( "distractor_image3"   , row.distractor_image3          )            
-    .log( "sentence"            , row.english_audio          )           
-    .log( "type"                , row.type          )  
-    .log( "condition"           , row.condition         )       
+    .log( "target_image"        , row.image1         )
+    .log( "distractor_image1"   , row.image2     )            
+    .log( "distractor_image2"   , row.image3         )   
+    .log( "distractor_image3"   , row.image4          )            
+    .log( "sentence"            , row.Audio          )           
+    .log( "type"                , row.StimulusType          )  
+    .log( "condition"           , row.StimulusCondition         )       
     .log( "Subject" , getVar("Subject") )
         )
 .setOption("countsForProgressBar",false) // hide progress bar from the display in the visual world experiment
-
-
-PennController("QuestionnairePage",
-          //show cursor     
-   newFunction( ()=>{
-           $("body").css({
-                width: '100vw',
-                height: '100vh',
-                cursor: 'default'
-       });
-    }).call()
-    ,                
-    newHtml("Questionnaire", "Questionnaire.html")
-        .settings.log()
-        .print()
-    ,
-    newButton("continue", "Continue")
-        .print()
-        .wait(
-            getHtml("Questionnaire").test.complete()
-                .failure( getHtml("Questionnaire").warn() )
-        )                      
-              )
-    .log( "Subject" , getVar("Subject") )
 
 PennController.SendResults("Send");
 
