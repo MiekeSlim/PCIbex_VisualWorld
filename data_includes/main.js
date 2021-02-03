@@ -159,77 +159,63 @@ newTrial("Instructions",
         .wait()
 )
 
-// Experimental trials
 Template("ListA.csv", row =>
-    newTrial("Block1",
-        //show cursor     
-        newFunction( ()=>{
-            $("body").css({
-                width: '100vw',
-                height: '100vh',
-                cursor: 'default'
-           });
-        }).call()
-        ,    
+    newTrial(
         newEyeTracker("tracker").calibrate(60)  // Make sure that the tracker is still calibrated
         ,
-        defaultImage.size("20vh", "20vh")
+        newTimer(250).start().wait()
         ,
+        defaultImage.size("20vh", "20vh"),
         // We print the four images at the four corners
-        newCanvas("target_image", "40vw", "40vh")  // The Canvas are bigger than the images they contain
-            .add( "center at 50%" , "middle at 50%" , newImage(row.Image1) )
+        newCanvas("topFemaleIA", "40vw", "40vh")  // The Canvas are bigger than the images they contain
+            .add( "center at 25%" , "middle at 50%" , newImage(row.Image1) )
             .print( "center at 25vw" , "middle at 25vh" )
         ,
-        newCanvas("distractor_image1", "40vw", "40vh")
-            .add( "center at 50%" , "middle at 50%" , newImage(row.Image2) )
+        newCanvas("bottomFemaleIA", "40vw", "40vh")
+            .add( "center at 25%" , "middle at 50%" , newImage(row.Image2) )
             .print( "center at 25vw" , "middle at 75vh" )
         ,
-        newCanvas("distractor_image2", "40vw", "40vh")
-            .add( "center at 50%" , "middle at 50%" , newImage(row.Image3) )
+        newCanvas("topMaleIA", "40vw", "40vh")
+            .add( "center at 25%" , "middle at 50%" , newImage(row.Image3) )
             .print( "center at 75vw" , "middle at 25vh" )
         ,
-        newCanvas("distractor_image3", "40vw", "40vh")
-            .add( "center at 50%" , "middle at 50%" , newImage(row.Image4) )
+        newCanvas("bottomMaleIA", "40vw", "40vh")
+            .add( "center at 25%" , "middle at 50%" , newImage(row.Image4) )
             .print( "center at 75vw" , "middle at 75vh" )
         ,
-        // Hide the mouse cursor
-        newFunction( ()=>{
-            $("body").css({
-                width: '100vw',
-                height: '100vh',
-                cursor: 'none'
-           });
-        }).call()
-        ,    
-        newSelector("Selector") //The only purpose of this selector is to randomise the positioning of the images on the screen
-            .add(getCanvas("target_image") , getCanvas("distractor_image1") , getCanvas("distractor_image2") , getCanvas("distractor_image3"))
-            .shuffle()             
-            .remove()
+        newAudio(row.context_soundfile).play().wait()
         ,
-        newTimer(2200).start().wait()
-        , 
+        getImage("backTF").remove(),getImage("backBF").remove(),getImage("backTM").remove(),getImage("backBM").remove()
+        ,
+        newImage(row.pic1_suit).print( "center at 75%" , "middle at 50%" , getCanvas("topFemaleIA") ),
+        newImage(row.pic2_suit).print( "center at 75%" , "middle at 50%" , getCanvas("bottomFemaleIA") ),
+        newImage(row.pic3_suit).print( "center at 75%" , "middle at 50%" , getCanvas("topMaleIA") ),
+        newImage(row.pic4_suit).print( "center at 75%" , "middle at 50%" , getCanvas("bottomMaleIA") )
+        ,
         getEyeTracker("tracker")
             // We track the Canvas: making them bigger allows us to capture look-estimates slightly off the images themselves
-            .add( getCanvas("target_image") , getCanvas("distractor_image1") , getCanvas("distractor_image2") , getCanvas("distractor_image3") )
+            .add( getCanvas("topFemaleIA") , getCanvas("bottomFemaleIA") , getCanvas("topMaleIA") , getCanvas("bottomMaleIA") )
             .start()
-            .log()  // IMPORTANT: if you don't log, the eye-tracking data will NOT get sent                    
+            .log()  // IMPORTANT: if you don't log, the eye-tracking data will NOT get sent
         ,
-        newTimer(1500)
-            .start()
+        newTimer(500).start().wait()
+        ,
+        newAudio("test", row.Audio).log().play()
+        ,
+        newSelector("answer")
+            .add( getCanvas("topFemaleIA") , getCanvas("bottomFemaleIA") , getCanvas("topMaleIA") , getCanvas("bottomMaleIA") )
+            .once()
+            .log()
             .wait()
         ,
-        getEyeTracker("tracker").stop() // Stop now to prevent collecting unnecessary data  
-        )
-    .log( "target_image"        , row.Image1         )
-    .log( "distractor_image1"   , row.Image2     )            
-    .log( "distractor_image2"   , row.Image3         )   
-    .log( "distractor_image3"   , row.Image4          )            
-    .log( "sentence"            , row.Audio          )           
-    .log( "type"                , row.StimulusType          )  
-    .log( "condition"           , row.StimulusCondition         )       
-    .log( "Subject" , getVar("Subject") )
-        )
-.setOption("countsForProgressBar",false) // hide progress bar from the display in the visual world experiment
+        getEyeTracker("tracker").stop() // Stop now to prevent collecting unnecessary data
+        ,
+        getAudio("test").wait("first")
+        ,
+        newTimer(250).start().wait()
+    )
+)
+
 
 PennController.SendResults("Send");
 
