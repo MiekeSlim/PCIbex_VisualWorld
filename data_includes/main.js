@@ -214,14 +214,11 @@ Template("ListA.csv", row =>
             .start()
             .log()  // IMPORTANT: if you don't log, the eye-tracking data will NOT get sent                    
         ,
-        newAudio("test", row.Audio)
-            .log()
-            .play()
+        newTimer(1500)
+            .start()
             .wait()
         ,
-        newTimer(250).start().wait()   
-         ,
-        getEyeTracker("tracker").stop() // Stop now to prevent collecting unnecessary data
+        getEyeTracker("tracker").stop() // Stop now to prevent collecting unnecessary data  
         )
     .log( "target_image"        , row.Image1         )
     .log( "distractor_image1"   , row.Image2     )            
