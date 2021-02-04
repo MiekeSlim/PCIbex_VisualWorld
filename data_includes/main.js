@@ -205,6 +205,7 @@ Template("ListA.csv", row =>
         ,     
         getEyeTracker("tracker").stop() // Stop now to prevent collecting unnecessary data
         )
+    .setOption("hideProgressBar", true)     
     .log( "image1"              , row.image1            )
     .log( "image2"              , row.image2            )            
     .log( "image3"              , row.image3            )   
