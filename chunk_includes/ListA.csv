@@ -1,4 +1,4 @@
-StimulusType,StimulusCondition,Practice,Pair,target_image,distractor_image1,distractor_image2,distractor_image3,english_audio,Verb,List,Group
+stimulustype,stimuluscondition,practice,pair,image1,image2,image3,image4,audio,verb,list,group
 Filler,NA,1,36,finger.jpg,paw.jpg,shoulder.jpg,fountain.jpg,Sarah_engels_Mary_bandages_a_finger_0.wav,bandages,ListA,A
 Experimental,Constraining,1,5,potato.jpg,coat.jpg,flower.jpg,dog.jpg,Sarah_engels_Mary_boils_a_potato_0.wav,boils,ListA,A
 Experimental,Neutral,1,12,fence.jpg,pencil.jpg,necklace.jpg,mirror.jpg,Sarah_engels_Mary_breaks_a_fence_0.wav,breaks,ListA,A
