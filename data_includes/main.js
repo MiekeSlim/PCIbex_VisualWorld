@@ -7,6 +7,7 @@ AddHost("https://users.ugent.be/~mslim/VW_DWR_Stimuli/images/");
 // PHP script that receives, stores (and will also output) the eye-tracking data
 EyeTrackerURL("https://users.ugent.be/~mslim/PCIbexData/EyeTracker.php")
 
+/*
 //Sequence( "Welcome1", "Welcome2", "CheckPreload", "AudioSetUp", "AudioCheck", "WebcamSetUp", "CalibrationSetUp", "Instructions", randomize("Experiment"), "QuestionnairePage", "Send",  "Final")
 
 // Welcome page 1
@@ -87,7 +88,7 @@ newTrial("AudioCheck",
         .print()
         .wait()
 )
-
+*/
 newTrial("WebcamSetUp", 
     newText("WebcamInstructions", "<p>Now that your audio is set, we need to calibrate your webcam so the experiment can follow your eye movements. On the next page, a calibration procedure will start. First, you will see the webcam recording on the top left corner of your screen. <br><br> Please make sure your face is fully visible. Glasses should not be a problem, but make sure that they are not reflecting any ambient light. Also, you can wear headphones.</p>")
     ,
@@ -152,30 +153,30 @@ Template("ListA.csv", row =>
            });
         }).call()
         ,    
-        newEyeTracker("tracker").calibrate(5)  // Make sure that the tracker is still calibrated
+        newEyeTracker("tracker").calibrate(60)  // Make sure that the tracker is still calibrated
         ,
         defaultImage.size("20vh", "20vh")
         ,
         // We print the four images at the four corners
-        newCanvas("target_image", "40vw", "40vh")  // The Canvas are bigger than the images they contain
-            .add( "center at 50%" , "middle at 50%" , newImage(row.target_image) )
+        newCanvas("image1", "40vw", "40vh")  // The Canvas are bigger than the images they contain
+            .add( "center at 50%" , "middle at 50%" , newImage(row.image1) )
             .print( "center at 25vw" , "middle at 25vh" )
         ,
-        newCanvas("distractor_image1", "40vw", "40vh")
-            .add( "center at 50%" , "middle at 50%" , newImage(row.distractor_image1) )
+        newCanvas("image2", "40vw", "40vh")
+            .add( "center at 50%" , "middle at 50%" , newImage(row.image2) )
             .print( "center at 25vw" , "middle at 75vh" )
         ,
-        newCanvas("distractor_image2", "40vw", "40vh")
-            .add( "center at 50%" , "middle at 50%" , newImage(row.distractor_image2) )
+        newCanvas("image3", "40vw", "40vh")
+            .add( "center at 50%" , "middle at 50%" , newImage(row.image3) )
             .print( "center at 75vw" , "middle at 25vh" )
         ,
-        newCanvas("distractor_image3", "40vw", "40vh")
-            .add( "center at 50%" , "middle at 50%" , newImage(row.distractor_image3) )
+        newCanvas("image4", "40vw", "40vh")
+            .add( "center at 50%" , "middle at 50%" , newImage(row.image4) )
             .print( "center at 75vw" , "middle at 75vh" )
         ,
         getEyeTracker("tracker")
             // We track the Canvas: making them bigger allows us to capture look-estimates slightly off the images themselves
-            .add( getCanvas("target_image") , getCanvas("distractor_image1") , getCanvas("distractor_image2") , getCanvas("distractor_image3") )
+            .add( getCanvas("image1") , getCanvas("image2") , getCanvas("image3") , getCanvas("image4") )
             .start()
             .log()  // IMPORTANT: if you don't log, the eye-tracking data will NOT get sent        
         ,   
@@ -189,26 +190,26 @@ Template("ListA.csv", row =>
         }).call()
         ,    
         newSelector("Selector") //The only purpose of this selector is to randomise the positioning of the images on the screen
-            .add(getCanvas("target_image") , getCanvas("distractor_image1") , getCanvas("distractor_image2") , getCanvas("distractor_image3"))
+            .add(getCanvas("image1") , getCanvas("image2") , getCanvas("image3") , getCanvas("image4"))
             .shuffle()             
             .remove()
         ,
         newTimer(2200).start().wait()
         ,
-        newAudio("test", row.english_audio)
+        newAudio("test", row.audio)
             .log()
             .play()
             .wait()
          ,
         getEyeTracker("tracker").stop() // Stop now to prevent collecting unnecessary data
         )
-    .log( "target_image"        , row.target_image          )
-    .log( "distractor_image1"   , row.distractor_image1     )            
-    .log( "distractor_image2"   , row.distractor_image2          )   
-    .log( "distractor_image3"   , row.distractor_image3          )            
-    .log( "sentence"            , row.english_audio          )           
-    .log( "type"                , row.StimulusType          )  
-    .log( "condition"           , row.StimulusCondition       )       
+    .log( "image1"              , row.image1            )
+    .log( "image2"              , row.image2            )            
+    .log( "image3"              , row.image3            )   
+    .log( "image4"              , row.image4            )            
+    .log( "sentence"            , row.audio             )           
+    .log( "stimulustype"        , row.stimulustype      )  
+    .log( "stimuluscondition"   , row.stimuluscondition )       
 )
 
 PennController.SendResults("Send");
