@@ -89,6 +89,9 @@ newTrial("AudioCheck",
         .wait()
 )
 */
+// I put this here for testing only:
+CheckPreloaded("CheckPreload")
+
 newTrial("WebcamSetUp", 
     newText("WebcamInstructions", "<p>Now that your audio is set, we need to calibrate your webcam so the experiment can follow your eye movements. On the next page, a calibration procedure will start. First, you will see the webcam recording on the top left corner of your screen. <br><br> Please make sure your face is fully visible. Glasses should not be a problem, but make sure that they are not reflecting any ambient light. Also, you can wear headphones.</p>")
     ,
@@ -214,6 +217,19 @@ Template("ListA.csv", row =>
     .log( "stimulustype"        , row.stimulustype      )  
     .log( "stimuluscondition"   , row.stimuluscondition )       
 )
+
+newTrial("BlinkBreak", 
+    newText("BlinkBreak", "<p>This was the first block! Feel free to take a five minute break. Make sure that this break is not much longer than five minutes, so you won't time out on Prolific. </p> <p> Click on the button below to continue to the second and final block of the experiment </p>")
+    ,
+    newButton("Take me to the next block (which will appear in fullscreen)")
+        .center()
+        .print()
+        .wait()
+        .wait( newEyeTracker("tracker").test.ready() )
+    ,
+    fullscreen()
+)
+
 
 PennController.SendResults("Send");
 
