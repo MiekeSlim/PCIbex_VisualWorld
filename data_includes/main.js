@@ -231,6 +231,24 @@ newTrial("BlinkBreak",
 )
 
 
+// Audio set-up
+PennController("AudioSetUp2",
+    newText("AudioInstructions", "<p> You can use this audio recording, in case you need to adjust the volume again for the second block. Feel free to replay this sentence as often as you need.</p>")
+    ,
+    newAudio("Volume_sentence", "practice_engels_Sarah_Mary_hits_a_boy_2_ok.wav")
+    ,
+    newCanvas( "myCanvas", 600 , 300)
+        .settings.add(0,0, getText("AudioInstructions"))
+        .settings.add(140, 200, getAudio("Volume_sentence"))
+        .print()
+    ,
+    newButton("Take me to the next page")
+        .center()
+        .print()
+        .wait()
+)
+
+
 PennController.SendResults("Send");
 
 newTrial("Final",
