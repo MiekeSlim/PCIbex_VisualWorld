@@ -200,7 +200,9 @@ Template("ListA.csv", row =>
             .log()
             .play()
             .wait()
-         ,
+        ,
+        newTimer(500).start().wait()
+        ,     
         getEyeTracker("tracker").stop() // Stop now to prevent collecting unnecessary data
         )
     .log( "image1"              , row.image1            )
