@@ -10,27 +10,162 @@ EyeTrackerURL("https://users.ugent.be/~mslim/PCIbexData/EyeTracker.php")
 /*
 //Sequence( "Welcome1", "Welcome2", "CheckPreload", "AudioSetUp", "AudioCheck", "WebcamSetUp", "CalibrationSetUp", "Instructions", randomize("Experiment"), "QuestionnairePage", "Send",  "Final")
 
-// Welcome page 1
-PennController("Welcome1",
-    newText("WelcomeText", "<p>Welcome and thank you for participating in this study! </p><p> </p><p> In this experiment, you will listen to short sentences while you look at images on your computer screen. Your webcam will be used to follow your eye movements during this task. It is therefore important that you are in a well-lit and quiet environment (you can use headphones). <br><br> Please turn off your mobile phone or other devices that may distract you during this task. Also, please close other websites that you may have open.</p><p> </p><p> Unfortunately, this experiment only works of you use <b> Google Chrome </b> or <b> Mozilla Firefox </b>. Please close the experiment now if you are not using one of these two browsers.</p>")
+// Check for L1
+PennController("Checks",
+    newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
+        .size("10vw")       
+        .print("20vw","00vh")
     ,
-    newCanvas( "myCanvas", 600 , 300)
-        .settings.add(0,0, getText("WelcomeText"))
-        .print()         
+    newImage("logo2", "icon_UGent_PP_EN_RGB_2400_color.png")
+        .size("20vw")       
+        .print("55vw","2vh")                           
+    ,           
+    newText("Consent", "Two short questions before we begin: <br><br> We will use your webcam to collect data on where you are looking on the screen. We will <b> not </b> collect any video data or any other type of data that may reveal your identity. Do you give us permission to use your webcam?<br><br>")
     ,
+    newCanvas( "myCanvas", "60vw" , "20vh")
+        .settings.add(0,0, getText("Consent"))
+        .print("20vw", "20vh")
+    ,    
+    newButton("yesConsent", "Yes, I give my permission")
+    ,
+    newButton("noConsent", "No, I don't give my permission")
+        .settings.before( getButton("yesConsent") )
+        .print("20vw" , "32vh")
+    ,
+    newSelector("yesnoConsent")
+        .settings.add( getButton("yesConsent") , getButton("noConsent"))
+        .wait()
+    ,
+    getSelector("yesnoConsent")
+        .settings.log()
+        .test.selected(getButton("yesConsent") )
+        .failure(
+            newCanvas("NoPermision", "60vw" , "20vh").settings.add(0,0, newText("<br><br>Unfortunately you cannot participate in this study. Please close the experiment by closing the browser (you can ignore possible pop-up screens) <br><br>"))
+                .print("20vw", "32vh")
+            ,
+            newButton("waitforever")
+                .wait()
+        )         
+    ,          
+    newText("Chrome", "This study only works well if you are using the Google Chrome browser on a laptop or desktop computer (so not on a mobile phone or tablet). Are you currently using <b> Google Chrome Desktop </b>? <br><br>")
+    ,
+    newCanvas( "myCanvas", "60vw" , "20vh")
+        .settings.add(0,0, getText("Chrome"))
+        .print("20vw", "40vh")
+    ,    
+    newButton("yesChrome", "Yes, I am currently using Chrome Desktop")
+    ,
+    newButton("noChrome", "No, I am using another browser/device")
+        .settings.before( getButton("yesChrome") )
+        .print("20vw" , "50vh")
+    ,
+    newSelector("yesnoChrome")
+    .center()       
+        .settings.add( getButton("yesChrome") , getButton("noChrome"))
+        .wait()
+    ,
+    getSelector("yesnoChrome")
+        .settings.log()
+        .test.selected(getButton("yesChrome") )
+        .failure(
+            newCanvas("WrongBrowser", "60vw" , "20vh").settings.add(0,0, newText("<br><br>Unfortunately, this experiment only works on Google Chrome (which can be downloaded for free). Please close the experiment by closing the browser (you may ignore possible pop-up screens), and come back on Chrome.<br><br>"))
+                .print("20vw" , "50vh")
+            ,
+            newButton("waitforever")
+                .wait()
+        )      
+)
+.setOption("hideProgressBar", true) 
+
+// Welcome text
+PennController("Welcome",
+    newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
+        .size("10vw")       
+        .print("20vw","00vh")
+    ,
+    newImage("logo2", "icon_UGent_PP_EN_RGB_2400_color.png")
+        .size("20vw")       
+        .print("55vw","2vh")                                         
+    ,        
+    newText("WelcomeText", "<p>Welcome and thank you for participating in this study! </p><p> </p><p> In this experiment, you will listen to short sentences while you look at images on your computer screen. <p></p> We will <b> not </b> collect any video data or any other type of data that may reveal your identity: We only collect data on where on the screen your eyes are looking during the experiment. <br> <br>  Because we will use your webcam to follow your eye movements during this task, it is important that you are in a well-lit and quiet environment. Please turn off your mobile phone or other devices that may distract you during this task. Also, please close other websites that you may have open.</p> <p> If you have any questions about this experiment, feel free to get in touch with me (Mieke Slim) via email: mieke.slim@ugent.be</p>")
+    ,           
+    newCanvas( "myCanvas", "60vw" , "60vh")
+        .settings.add(0,0, getText("WelcomeText"))       
+        .print("20vw", "15vh")         
+    ,      
     newButton("Take me to the next page")
         .center()
-        .print()
+        .print("center at 50vw", "80vh")
         .wait()
 )
+.setOption("hideProgressBar", true) 
+
+PennController("Consent",
+    newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
+        .size("10vw")       
+        .print("20vw","00vh")
+    ,
+    newImage("logo2", "icon_UGent_PP_EN_RGB_2400_color.png")
+        .size("20vw")       
+        .print("55vw","2vh")                           
+    ,               
+    newText("ConsentText", "<p>This experiment has been approved by the Ethical Comittee from the Faculty of Psychology and Educational Sciences at Ghent University. We request your consent for participation in this experiment. Therefore, please read the following carefully: </p > <p>I declare that I, as a participant in a research project in the Department of Experimental Psychology at Ghent University:<br><br> <ol> <li> have been informed about the research objectives, the questions and the tasks that I will encounter during the research and that I was given the opportunity to receive further information if desired<br><br> </li><li> will participate out of free will in the research project <br><br> </li><li> am aware that the researchers do not collect any personal information that may be used to identify my identity (such as video recordings). All the data that will be collected is completely anonymized; <br><br> </li><li> give informed consent to the researchers to store, process, and report my data in anonymized form <br><br> </li><li> am aware of the option to stop my participation in this research at any moment in time without having to provide a reason; <br><br> </li><li> know that participating or stopping my participation in the research has no negative consequences of any kind for me (apart from not receiving my payment via Prolific) <br><br> </li><li> am aware of the option to ask the researcher(s) for a summary of the results after the study is finished and the results have been known; <br><br> </li><li> agree that my data may be used for further analysis by other researchers after complete anonymization; <br><br> </li><li> am aware that Ghent University is the responsible entity with regards to the personal information collected during the study. I am also aware that the data protection officer can give me more information about the protection of my personal information. Contact: Hanne Elsen (privacy@ugent.be).</li> </ol> <br>In case you give your informed consent to participate in this study, please click on the button below. If you do not give your informed consent, please close this experiment. </p>")
+    ,
+    newCanvas( "myCanvas", "60vw" , "60vh")
+        .settings.add(0,0, getText("ConsentText"))
+        .print("20vw", "15vh")
+    ,
+    newButton("I have read the study information and give my informed consent. Continue to the next page")
+            .center()
+            .print("center at 50vw", "95vh")
+            .wait()
+)
+.setOption("hideProgressBar", true) 
+
+//Prolific ID
+PennController("ProlificID_trial",
+    newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
+        .size("10vw")       
+        .print("20vw","00vh")
+    ,
+    newImage("logo2", "icon_UGent_PP_EN_RGB_2400_color.png")
+        .size("20vw")       
+        .print("55vw","2vh")                           
+    ,    
+    defaultText
+        .print()
+    ,
+    newText("<p>Please fill in your Prolific ID below, so we can process your payment</p>")
+    ,
+    newTextInput("ProlificID")
+        .print()
+    ,
+    newButton("Continue")
+        .print()
+        .wait()
+    ,
+    newVar("ProlificID")
+        .settings.global()
+        .set( getTextInput("ProlificID") )
+    )
+    .log( "ProlificID" , getVar("ProlificID") )
+
 
 // Welcome page 2
 PennController("Welcome2",
-    newText("WelcomeText", "<p> The task in this experiment is very simple: You will listen to a couple of short sentences while you look at your computer screen. Your webcam will follow your eye movements. The next pages will help you set up the audio and webcam. <br><br> The webcam will be set up in a simple calibration procedure. During this calibration, you will see a video of your webcam stream. Importantly, we will not save these video recordings.  We will only collect data on your eyemovements on the computer screen. <b> We will not collect or save any video recordings from your webcam or any other type of information that may reveal your identity. </b> <br><br> If you have any questions about this experiment, you can contact me via email: mieke.slim@ugent.be </p>")
+    newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
+        .size("10vw")       
+        .print("20vw","00vh")
     ,
-    newCanvas( "myCanvas", 600 , 300)
+    newImage("logo2", "icon_UGent_PP_EN_RGB_2400_color.png")
+        .size("20vw")       
+        .print("55vw","2vh")                           
+    , 
+    newText("WelcomeText", "<p> The task in this experiment is very simple: You will listen to a couple of short sentences while you look at your computer screen. Your webcam will follow your eye movements. The next pages will help you set up the audio and webcam. <br><br> The webcam will be set up in a simple calibration procedure. During this calibration, you will see a video of your webcam stream. Again, we will not save these video recordings, but only collect data on your eyemovements on the computer screen. <br><br> If you have any questions about this experiment, you can contact me via email: mieke.slim@ugent.be </p>")
+    ,
+    newCanvas( "myCanvas", "60vw" , "60vh")
         .settings.add(0,0, getText("WelcomeText"))
-        .print()
+        .print("20vw", "15vh")
     ,
     newButton("Take me to the next page")
         .center()
@@ -218,9 +353,21 @@ Template("ListA.csv", row =>
     .log( "stimuluscondition"   , row.stimuluscondition )       
 )
 
-newTrial("BlinkBreak", 
-    newText("BlinkBreak", "<p>This was the first block! Feel free to take a five minute break. Make sure that this break is not much longer than five minutes, so you won't time out on Prolific. </p> <p> Click on the button below to continue to the second and final block of the experiment </p>")
+PennController("BlinkBreak",
+    newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
+        .size("10vw")       
+        .print("20vw","00vh")
     ,
+    newImage("logo2", "icon_UGent_PP_EN_RGB_2400_color.png")
+        .size("20vw")       
+        .print("55vw","2vh")                                         
+    ,        
+    newText("BlinkBreakText", "<p>This was the first block! Feel free to take a five minute break. Please make sure that this break is not much longer than five minutes, so you won't time out on Prolific. </p> <p> Click on the button below to continue to the second and final block of the experiment </p>")
+    ,           
+    newCanvas( "myCanvas", "60vw" , "60vh")
+        .settings.add(0,0, getText("BlinkBreakText"))       
+        .print("20vw", "15vh")         
+    ,      
     newButton("Take me to the next block (which will appear in fullscreen)")
         .center()
         .print()
@@ -229,6 +376,7 @@ newTrial("BlinkBreak",
     ,
     fullscreen()
 )
+.setOption("hideProgressBar", true) 
 
 
 // Audio set-up
@@ -259,4 +407,3 @@ newTrial("Final",
     newButton("waitforever").wait() // Not printed: wait on this page forever
 )
 .setOption("countsForProgressBar",false)
-
