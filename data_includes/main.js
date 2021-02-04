@@ -354,6 +354,15 @@ Template("ListA.csv", row =>
 )
 
 PennController("BlinkBreak",
+   //show cursor     
+   newFunction( ()=>{
+    $("body").css({
+        width: '100vw',
+        height: '100vh',
+        cursor: 'default'
+           });
+        }).call()
+    ,
     newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
         .size("10vw")       
         .print("20vw","00vh")
