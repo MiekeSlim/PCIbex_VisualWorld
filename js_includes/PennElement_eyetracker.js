@@ -478,6 +478,9 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
     }
 
     this.test = {
+        precisionAtLeast: function(atLeast){
+            return lastPrecision >= atLeast;
+        },
         calibrated: function(){
             return calibrated;
         },
