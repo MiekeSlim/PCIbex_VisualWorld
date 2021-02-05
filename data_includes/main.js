@@ -7,19 +7,21 @@ AddHost("https://users.ugent.be/~mslim/VW_DWR_Stimuli/images/");
 // PHP script that receives, stores (and will also output) the eye-tracking data
 EyeTrackerURL("https://users.ugent.be/~mslim/PCIbexData/EyeTracker.php")
 
-/*
+
 //Sequence( "Welcome1", "Welcome2", "CheckPreload", "AudioSetUp", "AudioCheck", "WebcamSetUp", "CalibrationSetUp", "Instructions", randomize("Experiment"), "QuestionnairePage", "Send",  "Final")
 
-// Check for L1
-PennController("Checks",
+Header(
     newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
         .size("10vw")       
         .print("20vw","00vh")
     ,
     newImage("logo2", "icon_UGent_PP_EN_RGB_2400_color.png")
         .size("20vw")       
-        .print("55vw","2vh")                           
-    ,           
+        .print("55vw","2vh")                                         
+    )
+
+// Check for L1
+PennController("Checks",         
     newText("Consent", "Two short questions before we begin: <br><br> We will use your webcam to collect data on where you are looking on the screen. We will <b> not </b> collect any video data or any other type of data that may reveal your identity. Do you give us permission to use your webcam?<br><br>")
     ,
     newCanvas( "myCanvas", "60vw" , "20vh")
@@ -78,15 +80,7 @@ PennController("Checks",
 .setOption("hideProgressBar", true) 
 
 // Welcome text
-PennController("Welcome",
-    newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
-        .size("10vw")       
-        .print("20vw","00vh")
-    ,
-    newImage("logo2", "icon_UGent_PP_EN_RGB_2400_color.png")
-        .size("20vw")       
-        .print("55vw","2vh")                                         
-    ,        
+PennController("Welcome",      
     newText("WelcomeText", "<p>Welcome and thank you for participating in this study! </p><p> </p><p> In this experiment, you will listen to short sentences while you look at images on your computer screen. <p></p> We will <b> not </b> collect any video data or any other type of data that may reveal your identity: We only collect data on where on the screen your eyes are looking during the experiment. <br> <br>  Because we will use your webcam to follow your eye movements during this task, it is important that you are in a well-lit and quiet environment. Please turn off your mobile phone or other devices that may distract you during this task. Also, please close other websites that you may have open.</p> <p> If you have any questions about this experiment, feel free to get in touch with me (Mieke Slim) via email: mieke.slim@ugent.be</p>")
     ,           
     newCanvas( "myCanvas", "60vw" , "60vh")
@@ -100,15 +94,7 @@ PennController("Welcome",
 )
 .setOption("hideProgressBar", true) 
 
-PennController("Consent",
-    newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
-        .size("10vw")       
-        .print("20vw","00vh")
-    ,
-    newImage("logo2", "icon_UGent_PP_EN_RGB_2400_color.png")
-        .size("20vw")       
-        .print("55vw","2vh")                           
-    ,               
+PennController("Consent",            
     newText("ConsentText", "<p>This experiment has been approved by the Ethical Comittee from the Faculty of Psychology and Educational Sciences at Ghent University. We request your consent for participation in this experiment. Therefore, please read the following carefully: </p > <p>I declare that I, as a participant in a research project in the Department of Experimental Psychology at Ghent University:<br><br> <ol> <li> have been informed about the research objectives, the questions and the tasks that I will encounter during the research and that I was given the opportunity to receive further information if desired<br><br> </li><li> will participate out of free will in the research project <br><br> </li><li> am aware that the researchers do not collect any personal information that may be used to identify my identity (such as video recordings). All the data that will be collected is completely anonymized; <br><br> </li><li> give informed consent to the researchers to store, process, and report my data in anonymized form <br><br> </li><li> am aware of the option to stop my participation in this research at any moment in time without having to provide a reason; <br><br> </li><li> know that participating or stopping my participation in the research has no negative consequences of any kind for me (apart from not receiving my payment via Prolific) <br><br> </li><li> am aware of the option to ask the researcher(s) for a summary of the results after the study is finished and the results have been known; <br><br> </li><li> agree that my data may be used for further analysis by other researchers after complete anonymization; <br><br> </li><li> am aware that Ghent University is the responsible entity with regards to the personal information collected during the study. I am also aware that the data protection officer can give me more information about the protection of my personal information. Contact: Hanne Elsen (privacy@ugent.be).</li> </ol> <br>In case you give your informed consent to participate in this study, please click on the button below. If you do not give your informed consent, please close this experiment. </p>")
     ,
     newCanvas( "myCanvas", "60vw" , "60vh")
@@ -123,15 +109,7 @@ PennController("Consent",
 .setOption("hideProgressBar", true) 
 
 //Prolific ID
-PennController("ProlificID_trial",
-    newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
-        .size("10vw")       
-        .print("20vw","00vh")
-    ,
-    newImage("logo2", "icon_UGent_PP_EN_RGB_2400_color.png")
-        .size("20vw")       
-        .print("55vw","2vh")                           
-    ,    
+PennController("ProlificID_trial",   
     defaultText
         .print()
     ,
@@ -150,7 +128,7 @@ PennController("ProlificID_trial",
     )
     .log( "ProlificID" , getVar("ProlificID") )
 
-
+/*
 // Welcome page 2
 PennController("Welcome2",
     newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
