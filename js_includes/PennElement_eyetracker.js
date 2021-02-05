@@ -12,6 +12,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
     let calibrated = false;
     let moveEvent = null;
     let uploadURL = "";
+    let lastPrecision;
 
     window.PennController.EyeTrackerURL = url => uploadURL = url; /* $AC$ PennController.EyeTrackerURL(url) Will send eye-tracking data to specified URL $AC$ */
 
