@@ -171,6 +171,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                     }
                     // Threshold met: tracker is calibrated
                     else {
+                        lastPrecision = precision;
                         calibrated = true;
                         calibrationDiv.remove();
                         showTracker(false);
