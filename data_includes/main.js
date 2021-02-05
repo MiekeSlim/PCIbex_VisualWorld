@@ -211,7 +211,6 @@ newTrial("WebcamSetUp",
     newButton("Take me to the next page (which will appear in fullscreen)")
         .center()
         .print()
-        .wait()
         .wait( newEyeTracker("tracker").test.ready() )
     ,
     fullscreen()
@@ -228,16 +227,17 @@ newTrial("CalibrationSetUp",
     newButton("Begin calibration")
         .center()
         .print()
-        .wait( newEyeTracker("tracker").test.ready() )
+        .wait(newEyeTracker("tracker").test.ready())
         .remove()
     ,
     getEyeTracker("tracker")
-        .test.precisionAtLeast(60)
+        .test.precisionAtLeast(80)
             .failure(newText("top word", "hello").print())
         .log()
 )
     .noHeader()   
 
+/*
 // Experiment instructions
 newTrial("Instructions", 
     newText("TaskInstructions", "<p>You're all set to start the experiment! The task in this experiment is very simple: You will hear a couple of short sentences while you look at the screen. The webcam will follow your eye movements during this task. <br> <br>Before each trial, you will see a button in the middle of your screen. Click on this button and look at it for three seconds. The webcam will check whether it is still calibrated. If it is, the trial will automatically start after three seconds. Otherwise, the calibration procedure will be repeated. <br><br>  During the trials, you don't need to click on anything: Just listen and watch!</p>")
@@ -381,3 +381,4 @@ newTrial("Final",
     newButton("waitforever").wait() // Not printed: wait on this page forever
 )
 .setOption("countsForProgressBar",false)
+*/
