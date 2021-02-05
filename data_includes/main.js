@@ -234,6 +234,7 @@ newTrial("CalibrationSetUp",
     getEyeTracker("tracker").calibrate(5)
         .log()
 )
+    .noHeader()   
 
 // Experiment instructions
 newTrial("Instructions", 
@@ -345,7 +346,7 @@ PennController("BlinkBreak",
         .print()
         .wait( newEyeTracker("tracker").test.ready() )
     ,
-    fullscreen()
+    fullscreen("center at 50%", "middle at 30%")
 )
 .setOption("hideProgressBar", true) 
 
