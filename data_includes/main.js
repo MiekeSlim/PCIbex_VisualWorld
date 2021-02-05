@@ -19,7 +19,7 @@ Header(
         .size("20vw")       
         .print("55vw","2vh")                                         
     )
-
+/*
 // Check for L1
 PennController("Checks",         
     newText("Consent", "Two short questions before we begin: <br><br> We will use your webcam to collect data on where you are looking on the screen. We will <b> not </b> collect any video data or any other type of data that may reveal your identity. Do you give us permission to use your webcam?<br><br>")
@@ -128,17 +128,9 @@ PennController("ProlificID_trial",
     )
     .log( "ProlificID" , getVar("ProlificID") )
 
-/*
+
 // Welcome page 2
 PennController("Welcome2",
-    newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
-        .size("10vw")       
-        .print("20vw","00vh")
-    ,
-    newImage("logo2", "icon_UGent_PP_EN_RGB_2400_color.png")
-        .size("20vw")       
-        .print("55vw","2vh")                           
-    , 
     newText("WelcomeText", "<p> The task in this experiment is very simple: You will listen to a couple of short sentences while you look at your computer screen. Your webcam will follow your eye movements. The next pages will help you set up the audio and webcam. <br><br> The webcam will be set up in a simple calibration procedure. During this calibration, you will see a video of your webcam stream. Again, we will not save these video recordings, but only collect data on your eyemovements on the computer screen. <br><br> If you have any questions about this experiment, you can contact me via email: mieke.slim@ugent.be </p>")
     ,
     newCanvas( "myCanvas", "60vw" , "60vh")
@@ -321,7 +313,8 @@ Template("ListA.csv", row =>
         ,     
         getEyeTracker("tracker").stop() // Stop now to prevent collecting unnecessary data
         )
-    .setOption("hideProgressBar", true)     
+    .setOption("hideProgressBar", true)
+    .noHeader()     
     .log( "image1"              , row.image1            )
     .log( "image2"              , row.image2            )            
     .log( "image3"              , row.image3            )   
@@ -340,15 +333,7 @@ PennController("BlinkBreak",
         cursor: 'default'
            });
         }).call()
-    ,
-    newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
-        .size("10vw")       
-        .print("20vw","00vh")
-    ,
-    newImage("logo2", "icon_UGent_PP_EN_RGB_2400_color.png")
-        .size("20vw")       
-        .print("55vw","2vh")                                         
-    ,        
+    ,     
     newText("BlinkBreakText", "<p>This was the first block! Feel free to take a five minute break. Please make sure that this break is not much longer than five minutes, so you won't time out on Prolific. </p> <p> Click on the button below to continue to the second and final block of the experiment </p>")
     ,           
     newCanvas( "myCanvas", "60vw" , "60vh")
@@ -358,7 +343,6 @@ PennController("BlinkBreak",
     newButton("Take me to the next block (which will appear in fullscreen)")
         .center()
         .print()
-        .wait()
         .wait( newEyeTracker("tracker").test.ready() )
     ,
     fullscreen()
