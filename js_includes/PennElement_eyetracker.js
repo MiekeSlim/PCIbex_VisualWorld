@@ -140,6 +140,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                     PennEngine.controllers.running.save(element.type, element.id, "calibration", precision, 
                                                         Date.now(), (remainingAttempts==1?"Last attempt":"NULL"));
                     if (threshold && Number(threshold)>0 && precision < threshold && remainingAttempts != 1){
+                        calibrationDiv.remove()
                         calibrated = false;
                         $(this).remove();
                         showTracker(true);
@@ -214,7 +215,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                     }).click(click))
                     .append($("<button>Click<br>here!</button>").css({
                         position: 'absolute', top: 'calc(50vh - 1.5vw)', left: "1vw", width: "3vw", height: "3vw"
-                    }).click(click))
+                    }).click(click)
                     .append($("<button>Click<br>here!</button>").css({
                         position: 'absolute', top: "1vw", left: '48.5vw', width: "3vw", height: "3vw"
                     }).click(click))
