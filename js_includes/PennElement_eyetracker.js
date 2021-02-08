@@ -12,6 +12,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
     let calibrated = false;
     let moveEvent = null;
     let uploadURL = "";
+    let lastPrecision;
 
     window.PennController.EyeTrackerURL = url => uploadURL = url; /* $AC$ PennController.EyeTrackerURL(url) Will send eye-tracking data to specified URL $AC$ */
 
@@ -171,6 +172,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                     }
                     // Threshold met: tracker is calibrated
                     else {
+                        lastPrecision = precision;
                         calibrated = true;
                         calibrationDiv.remove();
                         showTracker(false);
@@ -477,6 +479,9 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
     }
 
     this.test = {
+        precisionAtLeast: function(atLeast){
+            return lastPrecision >= atLeast;
+        },
         calibrated: function(){
             return calibrated;
         },
