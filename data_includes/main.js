@@ -231,8 +231,9 @@ newTrial("CalibrationSetUp",
         .remove()
     ,
     getEyeTracker("tracker")
-        .calibrate(60)
-)
+        .test.precisionAtLeast(90)
+    		.failure(newText("hi", "hi").print())
+            )
     .noHeader()   
 
 /*
