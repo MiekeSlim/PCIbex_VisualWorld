@@ -158,7 +158,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                                             "<p>- make sure there is enough ambient light for face-detection.</p>"+
                                             "<p>- make sure you follow your mouse pointer with your eyes.</p>"+
                                             "<p>- make sure you keep looking at the middle button until the end.</p>")
-                                        .css({margin: 'auto', 'margin-top': '5em'})
+                                        .css({margin: 'auto', 'margin-top': '5em', "background-color": "white"})
                         ).append(
                             // Retry button
                             $("<button>Retry</button>").click(function(){
