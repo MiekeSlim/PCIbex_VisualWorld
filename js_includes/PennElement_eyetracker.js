@@ -140,9 +140,9 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                     PennEngine.controllers.running.save(element.type, element.id, "calibration", precision, 
                                                         Date.now(), (remainingAttempts==1?"Last attempt":"NULL"));
                     if (threshold && Number(threshold)>0 && precision < threshold && remainingAttempts != 1){
-                        calibrated = false;
-                        calibrationDiv.remove();
+                        calibrated = false; 
                         showTracker(true);
+                        $(this).remove();
                         calibrationDiv.append(
                             $("<div>").html("<p>It looks like we were not able to precisely calibrate the tracker:</p>"+
                                             "<p>You calibration score is "+precision+" and you need at least "+threshold+"</p>"+
