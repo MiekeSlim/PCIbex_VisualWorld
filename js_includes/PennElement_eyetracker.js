@@ -12,7 +12,6 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
     let calibrated = false;
     let moveEvent = null;
     let uploadURL = "";
-    let lastPrecision;
 
     window.PennController.EyeTrackerURL = url => uploadURL = url; /* $AC$ PennController.EyeTrackerURL(url) Will send eye-tracking data to specified URL $AC$ */
 
@@ -121,7 +120,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
             'background-color': 'white', 'text-align': 'center'
         });
         // Will print a button in the middle of the screen
-        let startCalculation = ()=>{
+                let startCalculation = ()=>{
             calibrationDiv.find('button').remove();
             calibrationDiv.append($("<button>Click<br>here!</button>").css({
                 position: 'absolute', top: 'calc(50vh - 1.25vw)', bottom: '48.75vw', width: "2.5vw", height: "2.5vw"
@@ -170,9 +169,8 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                             }).css('margin','auto')
                         );
                     }
-                    // Threshold met: tracker is calibrated
+                    // Threshold met: tracker is calibrated OR no attempts left
                     else {
-                        lastPrecision = precision;
                         calibrated = true;
                         calibrationDiv.remove();
                         showTracker(false);
@@ -224,7 +222,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                     }).click(click))
                     .append($("<button>Click<br>here!</button>").css({
                         position: 'absolute', bottom: "1vw", left: '48.5vw', width: "3vw", height: "3vw"
-                    }).click(click));
+                    }).click(click));           
             }));
             showTracker(true);
         }
@@ -275,7 +273,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
         sessionID = PennEngine.utils.guidGenerator();
         initiated = true;
         let webgazer = document.createElement('script');
-        webgazer.setAttribute('src','https://users.ugent.be/~mslim/WebGazer.js');
+        webgazer.setAttribute('src','https://expt.pcibex.net/static/webgazer/webgazer.min.js');
         document.head.appendChild(webgazer);
         let checkIfReady = () => {
             if (window.webgazer) {
@@ -310,6 +308,14 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
         this.log = false;
         this.trainOnMouseMove = true;
         let previousClock;
+        // const checkForScale = function(scale){
+        //     const transform = this.css("transform").match(/matrix\(\s*(-?\d+(.\d+)?),[^,]+,[^,]+,\s*(-?\d+(.\d+)?),/);
+        //     if (transform){
+        //         scale.x = scale.x * Number(transform[1]);
+        //         scale.y = scale.y * Number(transform[3]);
+        //     }
+        //     return scale;
+        // }
         // Called every few ms (varies w/ performance) when EyeTracker started
         this.look = function (data,clock) {
             if (!this.enabled || data==null || data.x===undefined || data.y===undefined)
@@ -318,10 +324,29 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
             this.elements.map(el=>el.jQueryElement.removeClass("PennController-eyetracked"));
             // Check every element
             for (let e = 0; e < this.elements.length; e++){
-                let element = this.elements[e].jQueryElement;
-                let offset = element.offset(), w = element.width(), h= element.height();
-                let within = offset.left <= data.x && offset.top <= data.y && offset.left+w >= data.x && offset.top+h>=data.y;
+                // let element = this.elements[e].jQueryElement, inspected_element = element;
+                // let scale = {x: 1, y: 1};
+                // while (inspected_element){
+                //     checkForScale.call(inspected_element, scale);
+                //     inspected_element = inspected_element.parent();
+                //     if (inspected_element[0]===document) inspected_element = undefined;
+                // }
+                // // let offset = element.offset(), w = element.width(), h= element.height();
+                // let offset = element.offset(), w = element.width(), h= element.height(), scale_w = w*scale.x, scale_h = h*scale.y;
+                // // let within = offset.left <= data.x && offset.top <= data.y && offset.left+w >= data.x && offset.top+h>=data.y;
+                // // let within = offset.left-(scale_w-w)/2 <= data.x && offset.top-(scale_h-h)/2 <= data.y && 
+                // //              offset.left-(scale_w-w)/2+scale_w >= data.x && offset.top-(scale_h-h)/2+scale_h>=data.y;
+                // let within = offset.left <= data.x && offset.top <= data.y && 
+                //              offset.left+scale_w >= data.x && offset.top+scale_h>=data.y;
+                // console.log("scale x,y", scale.x, scale.y, "box", 
+                //             offset.left-(scale_w-w)/2,
+                //             offset.top-(scale_h-h)/2,
+                //             offset.left-(scale_w-w)/2+scale_w,
+                //             offset.top-(scale_h-h)/2+scale_h);
                 // Keep track of looks
+                // if (within)
+                const element = this.elements[e].jQueryElement,
+                      within = PennEngine.utils.overToScale.call(element,data.x,data.y);
                 if (within)
                     this.counts['_'+this.elements[e].id].push(1);
                 else
@@ -479,14 +504,20 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
     }
 
     this.test = {
-        precisionAtLeast: function(atLeast){
-            return lastPrecision >= atLeast;
-        },
         calibrated: function(){
             return calibrated;
         },
         ready: function(){
             return window.webgazer && window.webgazer.isReady();
+        },
+        score : function(arg){
+            const s = this._precision;
+            if (arg instanceof Function)
+                return arg.call(this, s);
+            else if (!isNaN(Number(arg)))
+                return s >= Number(arg);
+            else 
+                return calibrated;
         }
     }
 
