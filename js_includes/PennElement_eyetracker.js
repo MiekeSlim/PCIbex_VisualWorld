@@ -120,15 +120,13 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
             'background-color': 'white', 'text-align': 'center'
         });
         // Will print a button in the middle of the screen
-                let startCalculation = ()=>{
+        let startCalculation = ()=>{
             calibrationDiv.find('button').remove();
-            calibrationDiv.append($("<button>Click<br>here!</button>").css({
+            calibrationDiv.append($("<button>+</button>").css({
                 position: 'absolute', top: 'calc(50vh - 1.25vw)', bottom: '48.75vw', width: "2.5vw", height: "2.5vw"
             }).click(function(){
                 // Launches calculation per se
                 $(this).attr('disabled', true);
-                calibrationDiv.find('button').remove();
-                calibrationDiv.append($("<div>").html("<p>Look<br>here!</p>").css({position: 'absolute', top: 'calc(50vh - 1.25vw)', bottom: '48.75vw', left: '50vw', width: "2.5vw", height: "2.5vw"}));
                 storePoints = true;
                 setTimeout(()=>{
                     console.log("Past 50", past50Array);
@@ -140,8 +138,8 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                     PennEngine.controllers.running.save(element.type, element.id, "calibration", precision, 
                                                         Date.now(), (remainingAttempts==1?"Last attempt":"NULL"));
                     if (threshold && Number(threshold)>0 && precision < threshold && remainingAttempts != 1){
-                        calibrated = false; 
-                        calibrationDiv.find('div').remove();
+                        calibrated = false;
+                        $(this).remove();
                         showTracker(true);
                         calibrationDiv.append(
                             $("<div>").html("<p>It looks like we were not able to precisely calibrate the tracker:</p>"+
@@ -158,7 +156,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                                             "<p>- make sure there is enough ambient light for face-detection.</p>"+
                                             "<p>- make sure you follow your mouse pointer with your eyes.</p>"+
                                             "<p>- make sure you keep looking at the middle button until the end.</p>")
-                                        .css({margin: 'auto', 'margin-top': '5em', "background-color": "white"})
+                                        .css({margin: 'auto', 'margin-top': '5em'})
                         ).append(
                             // Retry button
                             $("<button>Retry</button>").click(function(){
@@ -199,30 +197,30 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                 showTracker(false);
                 // getGazer().showPredictionPoints(true);
                 calibrationDiv
-                    .append($("<button>Click<br>here!</button>").css({
-                        position: 'absolute', top: "1vw", left: "1vw", width: "3vw", height: "3vw"
+                    .append($("<button>+</button>").css({
+                        position: 'absolute', top: 0, left: 0, width: "2.5vw", height: "2.5vw"
                     }).click(click))
-                    .append($("<button>Click<br>here!</button>").css({
-                        position: 'absolute', top: "1vw", right: "1vw", width: "3vw", height: "3vw"
+                    .append($("<button>+</button>").css({
+                        position: 'absolute', top: 0, right: 0, width: "2.5vw", height: "2.5vw"
                     }).click(click))
-                    .append($("<button>Click<br>here!</button>").css({
-                        position: 'absolute', bottom: "1vw", left: "1vw", width: "3vw", height: "3vw"
+                    .append($("<button>+</button>").css({
+                        position: 'absolute', bottom: 0, left: 0, width: "2.5vw", height: "2.5vw"
                     }).click(click))
-                    .append($("<button>Click<br>here!</button>").css({
-                        position: 'absolute', bottom: "1vw", right: "1vw", width: "3vw", height: "3vw"
+                    .append($("<button>+</button>").css({
+                        position: 'absolute', bottom: 0, right: 0, width: "2.5vw", height: "2.5vw"
                     }).click(click))
-                    .append($("<button>Click<br>here!</button>").css({
-                        position: 'absolute', top: 'calc(50vh - 1.5vw)', left: "1vw", width: "3vw", height: "3vw"
+                    .append($("<button>+</button>").css({
+                        position: 'absolute', top: 'calc(50vh - 1.25vw)', left: 0, width: "2.5vw", height: "2.5vw"
                     }).click(click))
-                    .append($("<button>Click<br>here!</button>").css({
-                        position: 'absolute', top: "1vw", left: '48.5vw', width: "3vw", height: "3vw"
+                    .append($("<button>+</button>").css({
+                        position: 'absolute', top: 0, left: '48.75vw', width: "2.5vw", height: "2.5vw"
                     }).click(click))
-                    .append($("<button>Click<br>here!</button>").css({
-                        position: 'absolute', top: 'calc(50vh - 1.5vw)', right: "1vw", width: "3vw", height: "3vw"
+                    .append($("<button>+</button>").css({
+                        position: 'absolute', top: 'calc(50vh - 1.25vw)', right: 0, width: "2.5vw", height: "2.5vw"
                     }).click(click))
-                    .append($("<button>Click<br>here!</button>").css({
-                        position: 'absolute', bottom: "1vw", left: '48.5vw', width: "3vw", height: "3vw"
-                    }).click(click));           
+                    .append($("<button>+</button>").css({
+                        position: 'absolute', bottom: 0, left: '48.75vw', width: "2.5vw", height: "2.5vw"
+                    }).click(click));
             }));
             showTracker(true);
         }
@@ -273,7 +271,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
         sessionID = PennEngine.utils.guidGenerator();
         initiated = true;
         let webgazer = document.createElement('script');
-        webgazer.setAttribute('src','https://users.ugent.be/~mslim/WebGazer.js');
+        webgazer.setAttribute('src','https://expt.pcibex.net/static/webgazer/webgazer.min.js');
         document.head.appendChild(webgazer);
         let checkIfReady = () => {
             if (window.webgazer) {
