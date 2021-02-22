@@ -10,11 +10,11 @@ EyeTrackerURL("https://users.ugent.be/~mslim/PCIbexData/EyeTracker.php")
 Header(
     newImage("logo", "logo_UGent_EN_RGB_2400_color.png")
         .size("10vw")       
-        .print("20vw","00vh")
+        .print("center at 25%","top at 5%")
     ,
     newImage("logo2", "icon_UGent_PP_EN_RGB_2400_color.png")
         .size("20vw")       
-        .print("55vw","2vh")                                         
+        .print("center at 70%","top at 5%")                                         
     )
 
 // Check preload of required files:
@@ -84,13 +84,13 @@ PennController("Checks",
 PennController("Welcome",      
     newText("WelcomeText", "<p>Welcome and thank you for participating in this study! </p><p> </p><p> In this experiment, you will listen to short sentences while you look at images on your computer screen. We will use your webcam to follow your eyemocements on the screen. Therefore, it is important that you are in a well-lit and quiet environment. </p><p> Unfortunately, the experiment may not work with each webcam or if your connection is too unstable. If you webcam is not suitable for this task (which we will test in a moment), you will be redirected to another experiment in which you will judge English sentences (which doesn't require a webcam). This way, you can still earn your reward on Prolific. <p></p> We will <b> not </b> collect any video data or any other type of data that may reveal your identity: We only collect data on where on the screen your eyes are looking during the experiment. <br> <br>  Because we will use your webcam to follow your eye movements during this taskPlease turn off your mobile phone or other devices that may distract you during this task. Also, please close other websites that you may have open.</p> <p> If you have any questions about this experiment, feel free to get in touch with me (Mieke Slim) via email: mieke.slim@ugent.be</p>")
     ,           
-    newCanvas( "myCanvas", "60vw" , "60vh")
+    newCanvas("myCanvas", "60vw" , "60vh")
         .settings.add(0,0, getText("WelcomeText"))       
-        .print("20vw", "15vh")         
+        .print("center at 50%", "top at 25%")         
     ,      
     newButton("Take me to the next page")
         .center()
-        .print("center at 50vw", "80vh")
+        .print("center at 50%", "top at 60%") 
         .wait()
 )
 .setOption("hideProgressBar", true) 
@@ -98,20 +98,20 @@ PennController("Welcome",
 //Consent text:
 PennController("Consent",            
     newText("ConsentText", "<p>This experiment has been approved by the Ethical Comittee from the Faculty of Psychology and Educational Sciences at Ghent University. We request your consent for participation in this experiment. Therefore, please read the following carefully: </p > <p>I declare that I, as a participant in a research project in the Department of Experimental Psychology at Ghent University:<br><br> <ol> <li> have been informed about the research objectives, the questions and the tasks that I will encounter during the research and that I was given the opportunity to receive further information if desired<br><br> </li><li> will participate out of free will in the research project <br><br> </li><li> am aware that the researchers do not collect any personal information that may be used to identify my identity (such as video recordings). All the data that will be collected is completely anonymized; <br><br> </li><li> give informed consent to the researchers to store, process, and report my data in anonymized form <br><br> </li><li> am aware of the option to stop my participation in this research at any moment in time without having to provide a reason; <br><br> </li><li> know that participating or stopping my participation in the research has no negative consequences of any kind for me (apart from not receiving my payment via Prolific) <br><br> </li><li> am aware of the option to ask the researcher(s) for a summary of the results after the study is finished and the results have been known; <br><br> </li><li> agree that my data may be used for further analysis by other researchers after complete anonymization; <br><br> </li><li> am aware that Ghent University is the responsible entity with regards to the personal information collected during the study. I am also aware that the data protection officer can give me more information about the protection of my personal information. Contact: Hanne Elsen (privacy@ugent.be).</li> </ol> <br>In case you give your informed consent to participate in this study, please click on the button below. If you do not give your informed consent, please close this experiment. </p>")
-    ,
-    newCanvas( "myCanvas", "60vw" , "60vh")
-        .settings.add(0,0, getText("ConsentText"))
-        .print("20vw", "15vh")
+    ,           
+    newCanvas("myCanvas", "60vw" , "60vh")
+        .settings.add(0,0, getText("ConsentText"))       
+        .print("center at 50%", "top at 25%")   
     ,
     newButton("I have read the study information and give my informed consent. Continue to the next page")
             .center()
-            .print("center at 50vw", "95vh")
+            .print("center at 50%", "top at 80%") 
             .wait()
 )
 .setOption("hideProgressBar", true) 
 
-/*
 
+/*
 //Prolific ID
 PennController("ProlificID_trial",   
     defaultText
@@ -131,53 +131,53 @@ PennController("ProlificID_trial",
         .set( getTextInput("ProlificID") )
     )
     .log( "ProlificID" , getVar("ProlificID") )
-
+*/
 // Welcome page 2
 PennController("Welcome2",
     newText("WelcomeText", "<p> The task in this experiment is very simple: You will listen to a couple of short sentences while you look at your computer screen. Your webcam will follow your eye movements. The next pages will help you set up the audio and webcam. <br><br> The webcam will be set up in a simple calibration procedure. During this calibration, you will see a video of your webcam stream. Again, we will not save these video recordings, but only collect data on your eyemovements on the computer screen. <br><br> If you have any questions about this experiment, you can contact me via email: mieke.slim@ugent.be </p>")
     ,
-    newCanvas( "myCanvas", "60vw" , "60vh")
-        .settings.add(0,0, getText("WelcomeText"))
-        .print("20vw", "15vh")
+    newCanvas("myCanvas", "60vw" , "60vh")
+        .settings.add(0,0, getText("WelcomeText"))       
+        .print("center at 50%", "top at 25%")   
     ,
     newButton("Take me to the next page")
         .center()
-        .print()
-        .wait()
+        .print("center at 50%", "top at 60%") 
+        .wait( newEyeTracker("tracker").test.ready() )
 )
-*/
+.setOption("hideProgressBar", true) 
 
 newTrial("WebcamSetUp", 
     newText("WebcamInstructions", "<p>Before we start, we need to calibrate your webcam so the experiment can follow your eye movements. On the next page, a calibration procedure will start. First, you will see the webcam recording on the top left corner of your screen. <br><br> Please make sure your face is fully visible. If you wear glasses, make sure that they are not reflecting any ambient light. You can wear headphones.</p> <br><br> Some webcams may not be suitable for this task. If the calibration fails five times in a row, you will not be able to participate in this experiment. If this is the case, you will have the chance to participate in another task (which does not require a webcam), so you can still earn your reward on Prolific.")
     ,
-    newCanvas("myCanvas", 1200 , 500)
-        .settings.add(0,0, getText("WebcamInstructions"))
-        .print()
+    newCanvas("myCanvas", "60vw" , "60vh")
+        .settings.add(0,0, getText("WebcamInstructions"))       
+        .print("center at 50%", "top at 25%")   
     ,
     newButton("Take me to the next page (which will appear in fullscreen)")
         .center()
-        .print()
+        .print("center at 50%", "top at 60%") 
         .wait( newEyeTracker("tracker").test.ready() )
     ,
     fullscreen()
 )
+.setOption("hideProgressBar", true) 
 
 // Calibration page
 newTrial("CalibrationSetUp",
     newText("CalibrationInstructions", "<p>In the calibration procedure, you will see eight buttons on your screen. Please click on all these buttons and follow your cursor closely with your eyes. Once you've clicked on all buttons, a new button will appear in the middle of the screen. Please click on this button and look at it for three seconds so the algorithm can check whether it's well calibrated.</p> <p> In case calibration fails, the last step will be repeated. If the calibration procedure fails five times in a row, you will be redirected to another experiment that doesn't require a webcam.</p>")
     ,
-    newCanvas("myCanvas", 1200 , 100)
-        .settings.add(0,0, getText("CalibrationInstructions"))
-        .print()    
+    newCanvas("myCanvas", "60vw" , "60vh")
+        .settings.add(0,0, getText("CalibrationInstructions"))       
+        .print("center at 50%", "top at 25%")    
     ,
     newButton("Begin calibration")
         .center()
-        .print()
+        .print("center at 50%", "top at 60%") 
         .wait(newEyeTracker("tracker").test.ready())
         .remove()
     ,
-    newText("Yes", "Yes")
-        .css("font-size", "2vh")
+    getCanvas("myCanvas").remove()
     ,            
     getEyeTracker("tracker")
         .calibrate(0)
@@ -268,38 +268,35 @@ newTrial("CalibrationSetUp",
                     )
     )
     .noHeader()
+    .setOption("hideProgressBar", true) 
 
 // Audio set-up
 PennController("AudioSetUp",
-    newText("AudioInstructions", "<p>Now that we've set up your webcam, let's set up the audio. In this eperiment, you will hear a number of sentences. You can play one of the sentences that will be used in the experiment by clicking the 'play' button below. Please use this audio recording to adjust your volume. Feel free to replay this sentence as often as you need.</p>")
+    newText("AudioInstructions", "<p>Now that we've set up your webcam, let's set up the audio. In this experiment, you will hear a number of sentences. You can play one of the sentences that will be used in the experiment by clicking the 'play' button below. Please use this audio recording to adjust your volume. Feel free to replay this sentence as often as you need.</p>")
     ,
     newAudio("Volume_sentence", "practice_engels_Sarah_Mary_hits_a_boy_2_ok.wav")
     ,
-    newCanvas( "myCanvas", 600 , 300)
+    newCanvas( "myCanvas", "60vw" , "60vh")
         .settings.add(0,0, getText("AudioInstructions"))
-        .settings.add(140, 200, getAudio("Volume_sentence"))
-        .print()
+        .settings.add("center at 50%", "top at 20%", getAudio("Volume_sentence"))
+        .print("center at 50%", "top at 25%") 
     ,
     newButton("Take me to the next page")
         .center()
-        .print()
+        .print("center at 50%", "top at 50%") 
         .wait()
 )
 // Audio check
 newTrial("AudioCheck",
     newText("AudioCheckUp", "<p>Now that the audio volume is set, please listen to the audio file presented below. After you listened to the sentence, please type in the sentence you heard in the field that appears. Please listen carefully, because <b> you can only listen to the sentence once </b> </p>")
     ,
-    newTextInput("AudioCheckInput", "Type in the sentence you heard")
-    .settings.lines(0)
-    .settings.size(400, 50)
-    ,
-    newCanvas( "myCanvas", 600 , 100)
+    newCanvas( "myCanvas", "60vw" , "60vh")
         .settings.add(0,0, getText("AudioCheckUp"))
-        .print()
+        .print("center at 50%", "top at 25%")
     ,    
     newAudio("Check_sentence", "practice_engels_Sarah_Mary_has_a_diamond_ok.wav")
         .center()
-        .print()
+        .print("center at 50%", "top at 40%")
         .wait()
         .remove()
     ,
@@ -308,11 +305,11 @@ newTrial("AudioCheck",
             .log()
             .lines(0)
             .size(400, 50)
-            .print()
+            .print("center at 50%", "top at 40%")
     ,  
     newButton("Take me to the next page")
         .center()
-        .print()
+        .print("center at 50%", "top at 45%")
         .wait()
 )
 
@@ -323,14 +320,15 @@ newTrial("Instructions",
     ,
     newCanvas("myCanvas", 800 , 300)
         .settings.add(0,0, getText("TaskInstructions"))
-        .print()    
+        .print("center at 50%", "top at 25%")   
     ,
     newButton("Take me to the first trial")
         .center()
-        .print()
+        .print("center at 50%", "top at 50%")
         .wait()
 )
-
+    .setOption("hideProgressBar", true) 
+   
 //Trials: Block A
 Template("ListA.csv", row =>
     newTrial("Experiment",
