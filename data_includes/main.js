@@ -134,16 +134,24 @@ PennController("ProlificID_trial",
 
 // Welcome page 2
 PennController("WebcamSetUp",
-    newText("WebcamSetUpText", "<p> The next pages will help you set up the audio and webcam. The webcam will be set up in a simple calibration procedure. During this calibration, you will see a video of your webcam stream. Again, we will not save any recordings of this video stream. Please make sure your face is fully visible, and that you sit centrally in front of your webcam by following the instructions in the picture below.<br><br>You can start the calibration procedure by clicking on the start button that will appear on the middle of the screen.<br><br>In the calibration procedure, you will see eight buttons on your screen. Please click on all these buttons and follow your cursor closely with your eyes. Once you've clicked on all buttons, a new button will appear in the middle of the screen. Please click on this button and look at it for three seconds so the algorithm can check whether it's well calibrated.<br><br>In case calibration fails, the last step will be repeated. If the calibration procedure fails five times in a row, you will be redirected to another experiment that doesn't require a webcam (so you can still earn your reward on Prolific).<br><br>The next pages will appear in fullscreen. <b>Please do not close the fullscreen for the remainder of this experiment. </b>")
+    newText("WebcamSetUpText", "The next pages will help you set up the audio and webcam. The webcam will be set up in a simple calibration procedure. During this calibration, you will see a video of your webcam stream. Again, we will not save any recordings of this video stream. Please make sure your face is fully visible, and that you sit centrally in front of your webcam by following the instructions in the picture below.<br><br>You can start the calibration procedure by clicking on the start button that will appear on the middle of the screen.<br><br>In the calibration procedure, you will see eight buttons on your screen. Please click on all these buttons and follow your cursor closely with your eyes. Once you've clicked on all buttons, a new button will appear in the middle of the screen. Please click on this button and look at it for three seconds so the algorithm can check whether it's well calibrated.<br><br>In case calibration fails, the last step will be repeated. If the calibration procedure fails five times in a row, you will be redirected to another experiment that doesn't require a webcam (so you can still earn your reward on Prolific).<br><br>The next pages will appear in fullscreen. <b>Please do not close the fullscreen for the remainder of this experiment. </b>")
     ,
-    newCanvas("myCanvas", "60vw" , "60vh")
-        .settings.add(0,0, getText("WebcamSetUpText"))       
-        .print("center at 50%", "top at 25%")   
+    newImage("Instructions", "Instructions.png")
+        .size("60vw")
+    ,
+    newCanvas("InstructionsCanvas", "60vw" , "20vh")
+        .add(0,0, getText("WebcamSetUpText"))
+        .print("center at 50%", "top at 25%") 
+    ,
+    getImage("Instructions")
+        .print("center at 50%", "top at 45%")
     ,
     newButton("Begin calibration")
         .center()
-        .print("center at 50%", "top at 60%") 
+        .print("center at 50%", "top at 75%") 
         .wait( newEyeTracker("tracker").test.ready() )
+    ,
+    fullscreen()
 )
 .setOption("hideProgressBar", true) 
 
@@ -334,7 +342,7 @@ newTrial("Instructions",
     .setOption("hideProgressBar", true) 
     
   
-//Trials: Block A
+//Trials: Practise
 Template("Practise.csv", row =>
     newTrial("PractiseSession",
         //show cursor     
@@ -384,8 +392,28 @@ Template("Practise.csv", row =>
         ,    
         newSelector("Selector") //The only purpose of this selector is to randomise the positioning of the images on the screen
             .add(getCanvas("image1") , getCanvas("image2") , getCanvas("image3") , getCanvas("image4"))
-            .shuffle()             
-            .remove()
+            .shuffle() 
+        ,
+        newVariable("TargetPosition")
+        ,
+        getSelector("Selector")
+            .test.index( getImage("image1") , 0 )
+                .success(getVariable("TargetPosition").set("TopLeft"))
+                .failure(
+                    getSelector("Selector")
+                        .test.index( getImage("image1") , 1)
+                        .success(getVariable("TargetPosition").set("TopRight"))
+                            .failure(
+                                getSelector("Selector")
+                                    .test.index( getImage("image1") , 2)
+                                    .success(getVariable("TargetPosition").set("BottomLeft"))
+                                    .failure(
+                                        getVariable("TargetPosition").set("BottomRight")
+                                    )
+                            )
+                )
+        ,
+        getSelector("Selector").remove()
         ,
         newTimer(2200).start().wait()
         ,
@@ -415,12 +443,12 @@ newTrial("EndOfPractise",
     newText("EndOfPractiseText", "Those were the two practice trials. Please click on the button below to start the experiment.")
     ,
     newCanvas("myCanvas", 800 , 300)
-        .settings.add(0,0, getText("EndOfPractiseText"))
+        .settings.add("center at 50%",0, getText("EndOfPractiseText"))
         .print("center at 50%", "top at 25%")   
     ,
     newButton("Start the experiment")
         .center()
-        .print("center at 50%", "top at 50%")
+        .print("center at 50%", "top at 40%")
         .wait()
 )
     .setOption("hideProgressBar", true) 
@@ -640,10 +668,10 @@ newTrial("Final",
     ,
     exitFullscreen()
     ,
-    newText("FinalText", "The is the end of the experiment, you can now close this window. Thank you! <br> If you have any questions, you can contact me via mieke.slim@ugent.be").print()
+    newText("FinalText", "You’ve completed the experiment. Thank you very much for your participation! <br><br>If you want to know more about the goals of this experiment or if you want to know the results once the experiment is done, feel free to get in touch with me (Mieke Slim) via mieke.slim@ugent.be. <br><br> You can close the experiment by closing the browser (please ignore any pop-up windows).")
     ,
     newCanvas("myCanvas", "60vw" , "60vh")
-        .settings.add(0,0, getText("FinalText"))       
+        .settings.add("center at 50%",0, getText("FinalText"))       
         .print("center at 50%", "top at 25%")   
     ,
     newButton("waitforever").wait() // Not printed: wait on this page forever
