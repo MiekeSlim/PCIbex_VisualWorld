@@ -1,0 +1,5 @@
+stimulustype,stimuluscondition,practice,pair,image1,image2,image3,image4,audio,verb,list
+Experimental,Constraining,1,1,"cheese.jpg","mailbox.jpg","desk.jpg","bottle2.jpg","Sarah_engels_Mary_cuts_a_cheese_0.wav",cuts,listB
+Experimental,Neutral,1,2,"letter.jpg","car.jpg","backpack.jpg","wheelchair.jpg","Sarah_engels_Mary_steals_a_letter_0.wav",steals,listB
+Experimental,Neutral,1,3,"carrot.jpg","dress.jpg","napkin.jpg","ruler.jpg","Sarah_engels_Mary_grabs_a_carrot_0.wav",grabs,listB
+Experimental,Constraining,1,4,"wall.jpg","lock.jpg","heel.jpg","shower1.jpg","Sarah_engels_Mary_climbs_a_wall_0.wav",climbs,listB
