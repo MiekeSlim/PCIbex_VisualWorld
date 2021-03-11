@@ -20,63 +20,105 @@ Header(
 // Check preload of required files:
 CheckPreloaded("CheckPreload")
 
+Sequence("WebcamCheck", "ChromeCheck", "L1Check", "Welcome", "Consent", "ProlificID_trial", "WebcamSetUp", "Calibration", "AudioSetUp", "AudioCheck", "Instructions", "PractiseSession", "EndOfPractise", randomize("BlockA"), "BlinkBreak", "AudioSetUp2", randomize("BlockB"), "Send", "FinalPage")
 
-// Check for L1
-PennController("Checks",         
-    newText("Consent", "Two short questions before we begin: <br><br> We will use your webcam to collect data on where you are looking on the screen. We will <b> not </b> collect any video data or any other type of data that may reveal your identity. Do you give us permission to use your webcam?<br><br>")
+newTrial("WebcamCheck",
+    newText("PermissionWebcam", "Three brief questions before we begin:<br><br>We need to use your webcam to record where you are looking on the screen. We will <b>not</b> record any video or collect any other type of data that may reveal your identity. Do you give us permission to use your webcam?")
     ,
-    newCanvas( "myCanvas", "60vw" , "20vh")
-        .settings.add(0,0, getText("Consent"))
-        .print("20vw", "20vh")
-    ,    
-    newButton("yesConsent", "Yes, I give my permission")
+    newText("NoPermission", "No, I do not give my permission")
     ,
-    newButton("noConsent", "No, I don't give my permission")
-        .settings.before( getButton("yesConsent") )
-        .print("20vw" , "32vh")
+    newText("YesPermission", "Yes, I give my permission")
     ,
-    newSelector("yesnoConsent")
-        .settings.add( getButton("yesConsent") , getButton("noConsent"))
+    newCanvas("ChecksCanvas", "60vw" , "20vh")
+        .add("center at 50%", "top at 10%", getText("PermissionWebcam"))
+        .add("center at 20%", "top at 50%", getText("YesPermission"))
+        .add("center at 80%", "top at 50%", getText("NoPermission"))
+        .print("center at 50%", "top at 25%") 
+    ,
+    newSelector("yesno")
+        .settings.add( getText("YesPermission") , getText("NoPermission"))
         .wait()
     ,
-    getSelector("yesnoConsent")
+    getSelector("yesno")
         .settings.log()
-        .test.selected(getButton("yesConsent") )
+        .test.selected(getText("YesPermission"))
         .failure(
-            newCanvas("NoPermision", "60vw" , "20vh").settings.add(0,0, newText("<br><br>Unfortunately you cannot participate in this study. Please close the experiment by closing the browser (you can ignore possible pop-up screens) <br><br>"))
-                .print("20vw", "32vh")
+            getCanvas("ChecksCanvas")
+                .remove()
+            ,
+            newCanvas("NoPermision", "60vw" , "20vh")
+                .add("center at 50%", "top at 10%", newText("Unfortunately you cannot participate in this study. Please close the experiment by closing the browser (you can ignore possible pop-up screens)"))
+                .print("center at 50%", "top at 25%") 
             ,
             newButton("waitforever")
                 .wait()
-        )         
-    ,          
-    newText("Chrome", "This study only works well if you are using the Google Chrome browser on a laptop or desktop computer (so not on a mobile phone or tablet). Are you currently using <b> Google Chrome Desktop </b>? <br><br>")
+        )
+)
+
+newTrial("ChromeCheck",
+    newText("ChromeCheckText", "Three brief questions before we begin:<br><br>This study only works well if you are using the Google Chrome browser on a laptop or desktop computer (so not on a mobile phone or tablet). Are you currently using <b> Google Chrome Desktop </b>?")
     ,
-    newCanvas( "myCanvas", "60vw" , "20vh")
-        .settings.add(0,0, getText("Chrome"))
-        .print("20vw", "40vh")
-    ,    
-    newButton("yesChrome", "Yes, I am currently using Chrome Desktop")
+    newText("NoChrome", "No, I am using another browser/device")
     ,
-    newButton("noChrome", "No, I am using another browser/device")
-        .settings.before( getButton("yesChrome") )
-        .print("20vw" , "50vh")
+    newText("YesChrome", "Yes, I am currently using Chrome Desktop")
     ,
-    newSelector("yesnoChrome")
-    .center()       
-        .settings.add( getButton("yesChrome") , getButton("noChrome"))
+    newCanvas("ChecksCanvas", "60vw" , "20vh")
+        .add("center at 50%", "top at 10%", getText("ChromeCheckText"))
+        .add("center at 20%", "top at 50%", getText("YesChrome"))
+        .add("center at 80%", "top at 50%", getText("NoChrome"))
+        .print("center at 50%", "top at 25%") 
+    ,
+    newSelector("yesno")
+        .settings.add( getText("YesChrome") , getText("NoChrome"))
         .wait()
     ,
-    getSelector("yesnoChrome")
+    getSelector("yesno")
         .settings.log()
-        .test.selected(getButton("yesChrome") )
+        .test.selected(getText("YesChrome"))
         .failure(
-            newCanvas("WrongBrowser", "60vw" , "20vh").settings.add(0,0, newText("<br><br>Unfortunately, this experiment only works on Google Chrome (which can be downloaded for free). Please close the experiment by closing the browser (you may ignore possible pop-up screens), and come back on Chrome.<br><br>"))
-                .print("20vw" , "50vh")
+            getCanvas("ChecksCanvas")
+                .remove()
+            ,
+            newCanvas("NoChrome", "60vw" , "20vh")
+                .add("center at 50%", "top at 10%", newText("Unfortunately, this experiment only works on Google Chrome (which can be downloaded for free). Please close the experiment by closing the browser (you may ignore possible pop-up screens), and come back on Chrome."))
+                .print("center at 50%", "top at 25%") 
             ,
             newButton("waitforever")
                 .wait()
-        )      
+        )
+)
+
+newTrial("L1Check",
+    newText("L1CheckText", "Three brief questions before we begin:<br><br>To participate in this study, it is required that you are a <b>native speaker of English</b>. Are you a native speaker of English?")
+    ,
+    newText("NoL1", "No, I am not a native speaker of English")
+    ,
+    newText("YesL1", "Yes, English is my first language")
+    ,
+    newCanvas("ChecksCanvas", "60vw" , "20vh")
+        .add("center at 50%", "top at 10%", getText("L1CheckText"))
+        .add("center at 20%", "top at 50%", getText("YesL1"))
+        .add("center at 80%", "top at 50%", getText("NoL1"))
+        .print("center at 50%", "top at 25%") 
+    ,
+    newSelector("yesno")
+        .settings.add( getText("YesL1") , getText("NoL1"))
+        .wait()
+    ,
+    getSelector("yesno")
+        .settings.log()
+        .test.selected(getText("YesL1"))
+        .failure(
+            getCanvas("ChecksCanvas")
+                .remove()
+            ,
+            newCanvas("NoL1", "60vw" , "20vh")
+                .add("center at 50%", "top at 10%", newText("Unfortunately, you are not eligible to participate in this study. Please close the experiment by closing the browser (you may ignore possible pop-up screens)."))
+                .print("center at 50%", "top at 25%") 
+            ,
+            newButton("waitforever")
+                .wait()
+        )
 )
 
 // Welcome text
@@ -111,18 +153,19 @@ newTrial("Consent",
 )
 .setOption("hideProgressBar", true) 
 
-/*
+
 //Prolific ID
 PennController("ProlificID_trial",   
-    defaultText
+    newText("Please fill in your Prolific ID below, so we can process your payment")
+        .center()
         .print()
     ,
-    newText("<p>Please fill in your Prolific ID below, so we can process your payment</p>")
-    ,
     newTextInput("ProlificID")
+        .center()
         .print()
     ,
     newButton("Continue")
+        .center()
         .print()
         .wait()
     ,
@@ -131,7 +174,7 @@ PennController("ProlificID_trial",
         .set( getTextInput("ProlificID") )
     )
     .log( "ProlificID" , getVar("ProlificID") )
-*/
+
 
 // Welcome page 2
 PennController("WebcamSetUp",
@@ -265,7 +308,7 @@ newTrial("Calibration",
                                                             .failure(
                                                             getCanvas("myCanvas").remove()
                                                             ,
-                                                            newText("FailedCalibration5","Unfortunately, the calibration failed again. It seems that your webcam is not suitable for this task. Do you want to participate in another task (which doesn't require a webcam), and still earn your reward on Prolific?<br> Please click on this link: <strong>insert link</strong>. <br> If you do not want to participate in another task, please close the browser (you may ignore pop-up browsers). <br>If you have any questions, feel free to contact me via mieke.slim@ugent.be <br> Thank you for your participation!")
+                                                            newText("FailedCalibration5","Unfortunately, the calibration failed again. It seems that your webcam is not suitable for this task. Do you want to participate in another task (which doesn't require a webcam), and still earn your reward on Prolific?<br> Please visit this link: https://farm.pcibex.net/p/CwtjKf/. <br> If you do not want to participate in another task, please close the browser (you may ignore pop-up browsers). <br>If you have any questions, feel free to contact me via mieke.slim@ugent.be <br> Thank you for your participation!")
                                                                 .print("center at 50%", "middle at 50%")
                                                             ,
                                                             newButton("waitforever").wait() // Not printed: wait on this page forever
@@ -655,7 +698,7 @@ Template("TryB.csv", row =>
 
 PennController.SendResults("Send");
 
-newTrial("Final",
+newTrial("FinalPage",
     //show cursor     
     newFunction( ()=>{
         $("body").css({
