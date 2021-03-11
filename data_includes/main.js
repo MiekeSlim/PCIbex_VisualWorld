@@ -385,6 +385,18 @@ newTrial("Instructions",
 //Trials: Practise
 Template("Practise.csv", row =>
     newTrial("PractiseSession",
+        // The callback commands lets us log the X and Y coordinates of the estimated gaze-locations at each recorded moment in time (Thanks to Jeremy Zehr for helping us construct this command)
+        newEyeTracker("tracker",1).callback( function (x,y) {
+            if (this != getEyeTracker("tracker")._element.elements[0]) return;
+            getEyeTracker("tracker")._element.counts._Xs.push(x);
+            getEyeTracker("tracker")._element.counts._Ys.push(y); 
+            })
+        ,
+        newFunction(()=>{
+            getEyeTracker("tracker")._element.counts._Xs = [];
+            getEyeTracker("tracker")._element.counts._Ys = [];
+        }).call()  
+        ,     
         //show cursor     
         newFunction( ()=>{
             $("body").css({
@@ -491,6 +503,18 @@ newTrial("EndOfPractise",
 //Trials: Block A
 Template("TryA.csv", row =>
     newTrial("BlockA",
+        // The callback commands lets us log the X and Y coordinates of the estimated gaze-locations at each recorded moment in time (Thanks to Jeremy Zehr for helping us construct this command)
+        newEyeTracker("tracker",1).callback( function (x,y) {
+            if (this != getEyeTracker("tracker")._element.elements[0]) return;
+            getEyeTracker("tracker")._element.counts._Xs.push(x);
+            getEyeTracker("tracker")._element.counts._Ys.push(y); 
+            })
+        ,
+        newFunction(()=>{
+            getEyeTracker("tracker")._element.counts._Xs = [];
+            getEyeTracker("tracker")._element.counts._Ys = [];
+        }).call()  
+        ,                 
         //show cursor     
         newFunction( ()=>{
             $("body").css({
@@ -616,6 +640,18 @@ PennController("AudioSetUp2",
 //Trials: Block B
 Template("TryB.csv", row =>
     newTrial("BlockB",
+        // The callback commands lets us log the X and Y coordinates of the estimated gaze-locations at each recorded moment in time (Thanks to Jeremy Zehr for helping us construct this command)
+        newEyeTracker("tracker",1).callback( function (x,y) {
+            if (this != getEyeTracker("tracker")._element.elements[0]) return;
+            getEyeTracker("tracker")._element.counts._Xs.push(x);
+            getEyeTracker("tracker")._element.counts._Ys.push(y); 
+            })
+        ,
+        newFunction(()=>{
+            getEyeTracker("tracker")._element.counts._Xs = [];
+            getEyeTracker("tracker")._element.counts._Ys = [];
+        }).call()  
+        ,                  
         //show cursor     
         newFunction( ()=>{
             $("body").css({
