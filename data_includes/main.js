@@ -732,6 +732,62 @@ Template("TryB.csv", row =>
     .log( "stimuluscondition"   , row.stimuluscondition     )       
 )
 
+
+// Questionnare
+newTrial("LanguageQuestionnairePage",
+    //show cursor     
+    newFunction( ()=>{
+        $("body").css({
+            width: '100vw',
+            height: '100vh',
+            cursor: 'default'
+           });
+        }).call()
+    ,
+    newHtml("languagequestionnaire_form", "LanguageQuestionnaire.html")
+        .log()
+        .cssContainer({"width":"720px"})
+        .center()
+        .print()
+    ,
+    newButton("continue", "Continue")
+        .center()
+        .print()
+        .wait(getHtml("languagequestionnaire_form").test.complete()
+                  .failure(getHtml("languagequestionnaire_form").warn())
+        )
+)
+
+newTrial("WebcamQuestionnairePage",
+    newHtml("webcamquestionnaire_form", "WebcamQuestionnaire.html")
+        .log()
+        .cssContainer({"width":"720px"})
+        .center()
+        .print()
+    ,
+    newButton("continue", "Continue")
+        .center()
+        .print()
+        .wait(getHtml("webcamquestionnaire_form").test.complete()
+                  .failure(getHtml("webcamquestionnaire_form").warn())
+        )
+)
+
+PennController.SendResults("Send");
+
+newTrial("FinalPage",
+    exitFullscreen()
+    ,
+    newText("Final","This is the end of the experiment. <strong> Please verify your participation on Prolific by clicking on this link: <p><a href='https://app.prolific.co/submissions/complete?cc=66C714D9'>https://app.prolific.co/submissions/complete?cc=66C714D9</a></p> </strong> <br> Thank you for your participation! If you have any questions or if you want to know more about the results, please get in touch with me via mieke.slim@ugent.be")
+    ,
+    newCanvas("myCanvas", "60vw" , "60vh")
+        .settings.add(0,0, getText("Final"))
+        .print("22vw", "20vh") 
+    ,     
+    newButton("waitforever").wait() // Not printed: wait on this page forever
+)
+    .setOption("hideProgressBar", true)
+
 PennController.SendResults("Send");
 
 newTrial("FinalPage",
