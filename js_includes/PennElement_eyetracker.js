@@ -174,6 +174,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                         calibrated = true;
                         calibrationDiv.remove();
                         showTracker(false);
+                        lastPrecision = precision;
                         // Do not train the model on actual trials (too much on screen)
                         getGazer().removeMouseEventListeners();
                         resolve();
@@ -518,6 +519,9 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                 return s >= Number(arg);
             else 
                 return calibrated;
+        }
+        precisionAtLeast: function(atLeast){
+            return lastPrecision >= atLeast;
         }
     }
 
