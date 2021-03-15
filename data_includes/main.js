@@ -20,28 +20,26 @@ Header(
 // Check preload of required files:
 CheckPreloaded("CheckPreload")
 
-Sequence("WebcamCheck", "ChromeCheck", "L1Check", "Welcome", "Consent", "ProlificID_trial", "WebcamSetUp", "Calibration", "AudioSetUp", "AudioCheck", "Instructions", "PractiseSession", "EndOfPractise", randomize("BlockA"), "BlinkBreak", "AudioSetUp2", randomize("BlockB"), "Send", "FinalPage")
+Sequence("WebcamCheck", "ChromeCheck", "L1Check", "Welcome", "Consent", "ProlificID_trial", "WebcamSetUp", "Calibration", "AudioSetUp", "AudioCheck", "Instructions", "PractiseSession", "EndOfPractise", randomize("BlockA"), "BlinkBreak", "AudioSetUp2", randomize("BlockB"), "LanguageQuestionnairePage", "WebcamQuestionnairePage", "Send", "FinalPage")
 
 newTrial("WebcamCheck",
     newText("PermissionWebcam", "Three brief questions before we begin:<br><br>We need to use your webcam to record where you are looking on the screen. We will <b>not</b> record any video or collect any other type of data that may reveal your identity. Do you give us permission to use your webcam?")
     ,
-    newText("NoPermission", "No, I do not give my permission")
+    newText("NoPermission", "No, I do not give my permission<br>Press the 'J' key")
     ,
-    newText("YesPermission", "Yes, I give my permission")
+    newText("YesPermission", "Yes, I give my permission,<br>Press the 'F' key")
     ,
     newCanvas("ChecksCanvas", "60vw" , "20vh")
         .add("center at 50%", "top at 10%", getText("PermissionWebcam"))
-        .add("center at 20%", "top at 50%", getText("YesPermission"))
-        .add("center at 80%", "top at 50%", getText("NoPermission"))
+        .add("center at 20%", "top at 80%", getText("YesPermission"))
+        .add("center at 80%", "top at 80%", getText("NoPermission"))
         .print("center at 50%", "top at 25%") 
     ,
-    newSelector("yesno")
-        .settings.add( getText("YesPermission") , getText("NoPermission"))
+    newKey("yesno", "FJ")
         .wait()
     ,
-    getSelector("yesno")
-        .settings.log()
-        .test.selected(getText("YesPermission"))
+    getKey("yesno")
+        .test.pressed("F")
         .failure(
             getCanvas("ChecksCanvas")
                 .remove()
@@ -58,24 +56,22 @@ newTrial("WebcamCheck",
 newTrial("ChromeCheck",
     newText("ChromeCheckText", "Three brief questions before we begin:<br><br>This study only works well if you are using the Google Chrome browser on a laptop or desktop computer (so not on a mobile phone or tablet). Are you currently using <b> Google Chrome Desktop </b>?")
     ,
-    newText("NoChrome", "No, I am using another browser/device")
+    newText("NoChrome", "No, I am using another browser/device<br>Press the 'J' key")
     ,
-    newText("YesChrome", "Yes, I am currently using Chrome Desktop")
+    newText("YesChrome", "Yes, I am currently using Chrome Desktop<br>Press the 'F' key")
     ,
     newCanvas("ChecksCanvas", "60vw" , "20vh")
         .add("center at 50%", "top at 10%", getText("ChromeCheckText"))
-        .add("center at 20%", "top at 50%", getText("YesChrome"))
-        .add("center at 80%", "top at 50%", getText("NoChrome"))
+        .add("center at 20%", "top at 80%", getText("YesChrome"))
+        .add("center at 80%", "top at 80%", getText("NoChrome"))
         .print("center at 50%", "top at 25%") 
     ,
-    newSelector("yesno")
-        .settings.add( getText("YesChrome") , getText("NoChrome"))
+    newKey("yesno", "FJ")
         .wait()
     ,
-    getSelector("yesno")
-        .settings.log()
-        .test.selected(getText("YesChrome"))
-        .failure(
+    getKey("yesno")
+        .test.pressed("F")
+            .failure(
             getCanvas("ChecksCanvas")
                 .remove()
             ,
@@ -91,24 +87,22 @@ newTrial("ChromeCheck",
 newTrial("L1Check",
     newText("L1CheckText", "Three brief questions before we begin:<br><br>To participate in this study, it is required that you are a <b>native speaker of English</b>. Are you a native speaker of English?")
     ,
-    newText("NoL1", "No, I am not a native speaker of English")
+    newText("NoL1", "No, I am not a native speaker of English<br>Press the 'J' key")
     ,
-    newText("YesL1", "Yes, English is my first language")
+    newText("YesL1", "Yes, English is my first language<br>Press the 'F' key")
     ,
     newCanvas("ChecksCanvas", "60vw" , "20vh")
         .add("center at 50%", "top at 10%", getText("L1CheckText"))
-        .add("center at 20%", "top at 50%", getText("YesL1"))
-        .add("center at 80%", "top at 50%", getText("NoL1"))
+        .add("center at 20%", "top at 80%", getText("YesL1"))
+        .add("center at 80%", "top at 80%", getText("NoL1"))
         .print("center at 50%", "top at 25%") 
     ,
-    newSelector("yesno")
-        .settings.add( getText("YesL1") , getText("NoL1"))
+    newKey("yesno", "FJ")
         .wait()
     ,
-    getSelector("yesno")
-        .settings.log()
-        .test.selected(getText("YesL1"))
-        .failure(
+    getKey("yesno")
+        .test.pressed("F")
+            .failure(
             getCanvas("ChecksCanvas")
                 .remove()
             ,
@@ -188,7 +182,7 @@ PennController("WebcamSetUp",
         .print("center at 50%", "top at 25%") 
     ,
     getImage("Instructions")
-        .print("center at 50%", "top at 60%")
+        .print("center at 50%", "top at 65%")
     ,
     newKey("next", " ")
         .wait( newEyeTracker("tracker").test.ready() )
@@ -308,7 +302,9 @@ newTrial("Calibration",
                                                             .failure(
                                                             getCanvas("myCanvas").remove()
                                                             ,
-                                                            newText("FailedCalibration5","Unfortunately, the calibration failed again. It seems that your webcam is not suitable for this task. Do you want to participate in another task (which doesn't require a webcam), and still earn your reward on Prolific?<br> Please visit this link: https://farm.pcibex.net/p/CwtjKf/. <br> If you do not want to participate in another task, please close the browser (you may ignore pop-up browsers). <br>If you have any questions, feel free to contact me via mieke.slim@ugent.be <br> Thank you for your participation!")
+                                                            SendResults()
+                                                            ,
+                                                            newText("FailedCalibration5","Unfortunately, the calibration failed again. It seems that your webcam is not suitable for this task. Do you want to participate in another task (which doesn't require a webcam), and still earn your reward on Prolific?<br> Please visit this link:<p><a href='https://farm.pcibex.net/p/CwtjKf/'>https://farm.pcibex.net/p/CwtjKf/</a></p> <br> If you do not want to participate in another task, please close the browser (you may ignore pop-up browsers). <br>If you have any questions, feel free to contact me via mieke.slim@ugent.be <br> Thank you for your participation!")
                                                                 .print("center at 50%", "middle at 50%")
                                                             ,
                                                             newButton("waitforever").wait() // Not printed: wait on this page forever
@@ -334,7 +330,7 @@ PennController("AudioSetUp",
     ,
     newButton("Take me to the next page")
         .center()
-        .print("center at 50%", "top at 50%") 
+        .print("center at 50%", "top at 70%") 
         .wait()
 )
     .setOption("hideProgressBar", true) 
@@ -376,7 +372,7 @@ newTrial("Instructions",
     ,
     newButton("Take me to the practise trials")
         .center()
-        .print("center at 50%", "top at 50%")
+        .print("center at 50%", "top at 70%")
         .wait()
 )
     .setOption("hideProgressBar", true) 
@@ -501,7 +497,7 @@ newTrial("EndOfPractise",
     .setOption("hideProgressBar", true) 
 
 //Trials: Block A
-Template("TryA.csv", row =>
+Template("ListA.csv", row =>
     newTrial("BlockA",
         // The callback commands lets us log the X and Y coordinates of the estimated gaze-locations at each recorded moment in time (Thanks to Jeremy Zehr for helping us construct this command)
         newEyeTracker("tracker",1).callback( function (x,y) {
@@ -638,7 +634,7 @@ PennController("AudioSetUp2",
 .setOption("hideProgressBar", true) 
 
 //Trials: Block B
-Template("TryB.csv", row =>
+Template("ListB.csv", row =>
     newTrial("BlockB",
         // The callback commands lets us log the X and Y coordinates of the estimated gaze-locations at each recorded moment in time (Thanks to Jeremy Zehr for helping us construct this command)
         newEyeTracker("tracker",1).callback( function (x,y) {
@@ -744,49 +740,34 @@ newTrial("LanguageQuestionnairePage",
            });
         }).call()
     ,
-    newHtml("languagequestionnaire_form", "LanguageQuestionnaire.html")
-        .log()
+    newHtml("LanguageQuestionnaire", "LanguageQuestionnaire.html")
+        .settings.log()
         .cssContainer({"width":"720px"})
-        .center()
+        .checkboxWarning("You must consent before continuing.")
         .print()
     ,
     newButton("continue", "Continue")
         .center()
         .print()
-        .wait(getHtml("languagequestionnaire_form").test.complete()
-                  .failure(getHtml("languagequestionnaire_form").warn())
+        .wait(getHtml("LanguageQuestionnaire").test.complete()
+                  .failure(getHtml("LanguageQuestionnaire").warn())
         )
-)
+) 
 
 newTrial("WebcamQuestionnairePage",
-    newHtml("webcamquestionnaire_form", "WebcamQuestionnaire.html")
-        .log()
+    newHtml("WebcamQuestionnaire", "WebcamQuestionnaire.html")
+        .settings.log()
         .cssContainer({"width":"720px"})
-        .center()
+        .checkboxWarning("You must consent before continuing.")
         .print()
     ,
     newButton("continue", "Continue")
         .center()
         .print()
-        .wait(getHtml("webcamquestionnaire_form").test.complete()
-                  .failure(getHtml("webcamquestionnaire_form").warn())
+        .wait(getHtml("WebcamQuestionnaire").test.complete()
+                  .failure(getHtml("WebcamQuestionnaire").warn())
         )
-)
-
-PennController.SendResults("Send");
-
-newTrial("FinalPage",
-    exitFullscreen()
-    ,
-    newText("Final","This is the end of the experiment. <strong> Please verify your participation on Prolific by clicking on this link: <p><a href='https://app.prolific.co/submissions/complete?cc=66C714D9'>https://app.prolific.co/submissions/complete?cc=66C714D9</a></p> </strong> <br> Thank you for your participation! If you have any questions or if you want to know more about the results, please get in touch with me via mieke.slim@ugent.be")
-    ,
-    newCanvas("myCanvas", "60vw" , "60vh")
-        .settings.add(0,0, getText("Final"))
-        .print("22vw", "20vh") 
-    ,     
-    newButton("waitforever").wait() // Not printed: wait on this page forever
-)
-    .setOption("hideProgressBar", true)
+) 
 
 PennController.SendResults("Send");
 
@@ -802,12 +783,12 @@ newTrial("FinalPage",
     ,
     exitFullscreen()
     ,
-    newText("FinalText", "You’ve completed the experiment. Thank you very much for your participation! <br><br>If you want to know more about the goals of this experiment or if you want to know the results once the experiment is done, feel free to get in touch with me (Mieke Slim) via mieke.slim@ugent.be. <br><br> You can close the experiment by closing the browser (please ignore any pop-up windows).")
+    newText("Final","This is the end of the experiment. <strong> Please verify your participation on Prolific by clicking on this link: <p><a href='https://app.prolific.co/submissions/complete?cc=66C714D9'>https://app.prolific.co/submissions/complete?cc=66C714D9</a></p> </strong> <br> Thank you for your participation! If you have any questions or if you want to know more about the results, please get in touch with me via mieke.slim@ugent.be")
     ,
     newCanvas("myCanvas", "60vw" , "60vh")
-        .settings.add("center at 50%",0, getText("FinalText"))       
-        .print("center at 50%", "top at 25%")   
-    ,
+        .settings.add(0,0, getText("Final"))
+        .print("center at 50%", "middle at 50%") 
+    ,     
     newButton("waitforever").wait() // Not printed: wait on this page forever
 )
-.setOption("countsForProgressBar",false)
+    .setOption("hideProgressBar", true)
