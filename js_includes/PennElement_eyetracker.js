@@ -171,10 +171,10 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                     }
                     // Threshold met: tracker is calibrated OR no attempts left
                     else {
+                        lastPrecision = precision;
                         calibrated = true;
                         calibrationDiv.remove();
                         showTracker(false);
-                        lastPrecision = precision;
                         // Do not train the model on actual trials (too much on screen)
                         getGazer().removeMouseEventListeners();
                         resolve();
@@ -505,6 +505,9 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
     }
 
     this.test = {
+        precisionAtLeast: function(atLeast){
+            return lastPrecision >= atLeast;
+        },
         calibrated: function(){
             return calibrated;
         },
@@ -519,9 +522,6 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                 return s >= Number(arg);
             else 
                 return calibrated;
-        }
-        precisionAtLeast: function(atLeast){
-            return lastPrecision >= atLeast;
         }
     }
 
