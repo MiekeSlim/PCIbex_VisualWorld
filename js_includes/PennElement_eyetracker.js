@@ -126,22 +126,21 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                 position: 'absolute', top: "calc(50vh - 1.5vw)", left: "48.5vw", width: "3vw", height: "3vw"
             }).click(function(){
                 // Launches calculation per se
-                $(this).attr('disabled', true);
-                calibrationDiv.find('button').remove();
-                calibrationDiv.append($("<div>").html("<p>Look<br>here!</p>").css({position: 'absolute', top: 'calc(50vh - 1.25vw)', bottom: '48.75vw', left: '50vw', width: "2.5vw", height: "2.5vw"}));
+                        $(this).attr('disabled', true);
+        calibrationDiv.find('button').remove();
+        calibrationDiv.append($("<p>Look<br>here!<\p>").css({position: 'absolute', top: "calc(50vh - 1.5vw)", left: "48.5vw", width: "3vw", height: "3vw", "font-size": "1vw"}));             
                 storePoints = true;
                 setTimeout(()=>{
                     console.log("Past 50", past50Array);
                     let precision = calculatePrecision(past50Array);
-                    element._precision = precision;
                     PennEngine.debug.log("Tracker's precision: "+precision);
                     storePoints = false;
                     past50Array = [[],[]];
                     PennEngine.controllers.running.save(element.type, element.id, "calibration", precision, 
                                                         Date.now(), (remainingAttempts==1?"Last attempt":"NULL"));
                     if (threshold && Number(threshold)>0 && precision < threshold && remainingAttempts != 1){
-                        calibrated = false; 
-                        calibrationDiv.find('div').remove();
+                        calibrated = false;
+                        $(this).remove();
                         showTracker(true);
                         calibrationDiv.append(
                             $("<div>").html("<p>It looks like we were not able to precisely calibrate the tracker:</p>"+
@@ -158,7 +157,7 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                                             "<p>- make sure there is enough ambient light for face-detection.</p>"+
                                             "<p>- make sure you follow your mouse pointer with your eyes.</p>"+
                                             "<p>- make sure you keep looking at the middle button until the end.</p>")
-                                        .css({margin: 'auto', 'margin-top': '5em', "background-color": "white"})
+                                        .css({margin: 'auto', 'margin-top': '5em'})
                         ).append(
                             // Retry button
                             $("<button>Retry</button>").click(function(){
@@ -169,8 +168,9 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                             }).css('margin','auto')
                         );
                     }
-                    // Threshold met: tracker is calibrated 
+                    // Threshold met: tracker is calibrated
                     else {
+                        lastPrecision = precision;
                         calibrated = true;
                         calibrationDiv.remove();
                         showTracker(false);
@@ -482,6 +482,9 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
         },
         ready: function(){
             return window.webgazer && window.webgazer.isReady();
+        },
+        precisionAtLeast: function(atLeast){
+            return lastPrecision >= atLeast;
         }
     }
 
