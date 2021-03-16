@@ -20,7 +20,21 @@ Header(
 // Check preload of required files:
 CheckPreloaded("CheckPreload")
 
-Sequence("WebcamCheck", "ChromeCheck", "L1Check", "Welcome", "Consent", "ProlificID_trial", "WebcamSetUp", "Calibration", "AudioSetUp", "AudioCheck", "Instructions", "PractiseSession", "EndOfPractise", randomize("BlockA"), "BlinkBreak", "AudioSetUp2", randomize("BlockB"), "LanguageQuestionnairePage", "WebcamQuestionnairePage", "Send", "FinalPage")
+Sequence("CheckPreload", "Loading", "WebcamCheck", "ChromeCheck", "L1Check", "Welcome", "Consent", "ProlificID_trial", "WebcamSetUp", "Calibration", "AudioSetUp", "AudioCheck", "Instructions", "PractiseSession", "EndOfPractise", randomize("BlockA"), "BlinkBreak", "AudioSetUp2", randomize("BlockB"), "LanguageQuestionnairePage", "WebcamQuestionnairePage", "Send", "FinalPage")
+
+newTrial("Loading",
+    newText("Loading", "Loading...")
+        .center()
+        .print()
+    ,
+    newTimer(2000)
+        .start()
+        .wait()
+    ,   
+    newButton("click", "Continue to the experiment")
+        .print()
+        .wait()
+)
 
 newTrial("WebcamCheck",
     newText("PermissionWebcam", "Three brief questions before we begin:<br><br>We need to use your webcam to record where you are looking on the screen. We will <b>not</b> record any video or collect any other type of data that may reveal your identity. Do you give us permission to use your webcam?")
