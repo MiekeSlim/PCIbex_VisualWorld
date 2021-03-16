@@ -194,7 +194,7 @@ PennController("ProlificID_trial",
 
 // Welcome page 2
 PennController("WebcamSetUp",
-    newText("WebcamSetUpText", "The next pages will help you set up the audio and webcam. The webcam will be set up in a simple calibration procedure. During this calibration, you will see a video of your webcam stream. Again, we will not save any recordings of this video stream. Please make sure your face is fully visible, and that you sit centrally in front of your webcam by following the instructions in the picture below.<br><br>You can start the calibration procedure by clicking on the start button that will appear on the middle of the screen.<br><br>In the calibration procedure, you will see eight buttons on your screen. Please click on all these buttons and follow your cursor closely with your eyes. Once you've clicked on all buttons, a new button will appear in the middle of the screen. Please click on this button and look at it for three seconds so the algorithm can check whether it's well calibrated.<br><br>In case calibration fails, the last step will be repeated. If the calibration procedure fails three times in a row, you will be redirected to another experiment that doesn't require a webcam (so you can still earn your reward on Prolific).<br><br> Press <b>SPACE</b> to continue to the next trial")
+    newText("WebcamSetUpText", "The next pages will help you set up the audio and webcam. The webcam will be set up in a simple calibration procedure. During this calibration, you will see a video of your webcam stream. Again, we will not save any recordings of this video stream. Please make sure your face is fully visible, and that you sit centrally in front of your webcam by following the instructions in the picture below.<br><br>You can start the calibration procedure by clicking on the start button that will appear on the middle of the screen.<br><br>In the calibration procedure, you will see eight buttons on your screen. Please click on all these buttons and follow your cursor closely with your eyes. Once you've clicked on all buttons, a new button will appear in the middle of the screen. Please click on this button and look at it for three seconds so the algorithm can check whether it's well calibrated.<br><br>In case calibration fails, the last step will be repeated. If the calibration procedure fails three times in a row, please click on the link that will be provided to you, so you will be redirected to another experiment that doesn't require a webcam. This way, you can still earn your reward on Prolific.<br><br> Press <b>SPACE</b> to continue to the next trial")
     ,
     newImage("Instructions", "Instructions.png")
         .size("60vw")
@@ -217,71 +217,10 @@ newTrial("Calibration",
     newText("NoAttempts", "Attempts left: ")
         .settings.after( newText("attempts", "3") )
     ,
-    newVar("calibrationattempts", 3)
-    ,
-    getText("attempts") 
-        .settings.text( getVar("calibrationattempts") )
-    ,
-    newCanvas("FailedCalibration", "60vw" , "60vh")
-        .settings.add("center at 50%", "top at 5%", newText("Unfortunately, the calibration failed. Let's try again!"))
-        .settings.add("center at 50%", "top at 10%", getText("NoAttempts"))
-    ,
     getEyeTracker("tracker")
-        .test.precisionAtLeast(60)
-            .failure(
-                getVar("calibrationattempts")
-                    .set( v => v-1 ) 
-                ,
-                getText("attempts") 
-                   .settings.text( getVar("calibrationattempts"))
-                ,
-                getCanvas("myCanvas").remove()
-                ,
-                getCanvas("FailedCalibration")
-                    .print("center at 50%", "top at 40%")
-                ,
-                newButton("Retry")
-                    .print("center at 50%", "top at 50%")
-                    .wait(newEyeTracker("tracker").test.ready())
-                    .remove()
-                ,
-                getCanvas("FailedCalibration")
-                    .remove()
-                ,
-                getEyeTracker("tracker")
-                    .test.precisionAtLeast(60)
-                        .failure(
-                            getVar("calibrationattempts")
-                                .set( v => v-1 ) 
-                            ,
-                            getText("attempts") 
-                                .settings.text( getVar("calibrationattempts")) 
-                            ,
-                            getCanvas("myCanvas").remove()
-                            ,
-                            getCanvas("FailedCalibration")
-                                .print("center at 50%", "top at 40%")
-                            ,
-                            newButton("Retry")
-                                .print("center at 50%", "top at 50%")
-                                .wait(newEyeTracker("tracker").test.ready())
-                                .remove()
-                            ,
-                            getCanvas("FailedCalibration")
-                                .remove()
-                            ,
-                            getEyeTracker("tracker")
-                                .test.precisionAtLeast(60)
-                                    .failure(
-                                        getCanvas("myCanvas").remove()
-                                        ,
-                                        newText("FailedCalibration5","Unfortunately, the calibration failed again.<br> Please click on this link to be redirected to a related experiment that does not require a webcam:<p><a href='https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html'>https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html</a></p> <br> This way, you can still earn your reward on Prolific. <br>If you have any questions, feel free to contact me via mieke.slim@ugent.be")
-                                            .print("center at 50%", "middle at 50%")
-                                        ,
-                                        newButton("waitforever").wait() // Not printed: wait on this page forever
-                                                        ) 
-                                                )    
-                                )
+        .calibrate(60)
+        .log()
+           
         )
         .noHeader()
         .setOption("hideProgressBar", true)
@@ -490,7 +429,7 @@ Template("ListA.csv", row =>
         }).call()
         ,
         newEyeTracker("tracker")
-            .calibrate(50)  // Make sure that the tracker is still calibrated
+            .calibrate(60)  // Make sure that the tracker is still calibrated
             .log()  // log the calibration scores
         ,
         defaultImage.size("20vh", "20vh")
@@ -627,7 +566,7 @@ Template("ListB.csv", row =>
         }).call()
         ,
         newEyeTracker("tracker")
-            .calibrate(50)  // Make sure that the tracker is still calibrated
+            .calibrate(60)  // Make sure that the tracker is still calibrated
             .log()  // log the calibration scores
         ,
         defaultImage.size("20vh", "20vh")
