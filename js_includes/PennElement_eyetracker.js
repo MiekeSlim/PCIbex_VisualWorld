@@ -145,7 +145,10 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                         calibrationDiv.append(
                             $("<div>").html("<p>It looks like we were not able to precisely calibrate the tracker:</p>"+
                                             "<p>You calibration score is "+precision+" and you need at least "+threshold+"</p>"+
-                                            "<p>Here are a few tips to help you better self-calibrate:</p>"+
+                                            "<p><b><br>Did the calibration fail three times in a row?</p>"+
+                                            "<p>Please visit this link to be redirected to another survey that doesn't require the webcam:</p>"+
+                                            "<p><a href='https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html'>https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html</a></p>"+
+                                            "<p><br> Here are a few tips to help you better self-calibrate:</p>"+
                                             "<p>- try adjusting your webcam based on the video in the top-left corner.</p>"+
                                             "<p>- if you use an external webcam, make sure it is fixed to the top of your screen.</p>"+
                                             "<p>- try raising your screen so as to align your webcam with your eyes</p>"+
@@ -170,7 +173,6 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                     }
                     // Threshold met: tracker is calibrated
                     else {
-                        lastPrecision = precision;
                         calibrated = true;
                         calibrationDiv.remove();
                         showTracker(false);
@@ -482,9 +484,6 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
         },
         ready: function(){
             return window.webgazer && window.webgazer.isReady();
-        },
-        precisionAtLeast: function(atLeast){
-            return lastPrecision >= atLeast;
         }
     }
 
