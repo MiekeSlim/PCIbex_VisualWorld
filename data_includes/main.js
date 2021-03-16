@@ -30,8 +30,16 @@ newTrial("Loading",
     newTimer(1500)
         .start()
         .wait()
-    ,   
-    newButton("click", "Continue to the experiment")
+    ,
+    getText("Loading")
+        .remove()
+    ,
+    newText("Continue", "Click on the button below to start the experiment!")
+        .center()
+        .print()
+    ,
+    newButton("ContinueButton", "Continue to the experiment")
+        .center()
         .print()
         .wait()
 )
@@ -68,7 +76,7 @@ newTrial("WebcamCheck",
 )
 
 newTrial("ChromeCheck",
-    newText("ChromeCheckText", "Three brief questions before we begin:<br><br>This study only works well if you are using the Google Chrome browser on a laptop or desktop computer (so not on a mobile phone or tablet). Are you currently using <b> Google Chrome Desktop </b>?")
+    newText("ChromeCheckText", "Three brief questions before we begin:<br><br>This study only works well if you are using the Google Chrome browser on a laptop or desktop computer (so not on a mobile phone or tablet). Are you currently using <b> Google Chrome Desktop</b>?<br>Note that the experiment will not work if you run it in a different browser!")
     ,
     newText("NoChrome", "No, I am using another browser/device<br>Press the 'J' key")
     ,
@@ -131,7 +139,7 @@ newTrial("L1Check",
 
 // Welcome text
 newTrial("Welcome",
-    newText("WelcomeText", "Welcome and thank you for participating in this experiment.<br><br>Cognitive scientists often record eye movements to study human behavior, because eye movements tell a lot about how we divide our attention and how we make decisions. Typically, expensive eye-tracking devices are used to record eye movements. The aim of this experiment is to test whether we could also use webcams to achieve this goal. <br><br>The task is very simple and should take roughly 25-30 minutes to complete (there will be a break in the middle). All you have to do is listen to short sentences while four images are presented on your computer screen. Feel free to look anywhere, as long as it is on your computer screen. Your webcam will be used to follow your eye movements on the task. <br><br>We will <b>not</b> collect any video data or any other type of data that may reveal your identity. We only collect data on where on the screen your eyes are looking during the experiment.<br><br>Unfortunately, the experiment may not work for everyone: Sometimes the webcam is not able to pick up your eye movements (for a variety of possible reasons). We will test in a moment whether the experiment works for you. In case it doesn’t, you will be redirected to another experiment in which you will judge English sentences (which doesn't require a webcam). This way, you can still earn your reward on Prolific.<br><br>It is important that you are in a well-lit and quiet environment, otherwise the webcam may not be able to pick up your eye movements. Please turn off any devices or applications that may distract you during this task (such as your mobile phone or your email application) and please close other websites that you may have open.<br><br>If you have any questions about this experiment, feel free to get in touch with me (Mieke Slim) via email: mieke.slim@ugent.be <br><br> Press <b>SPACE</b> to continue. <br><br>The next pages will appear in fullscreen. <b>Please do not close the fullscreen for the remainder of this experiment. </b>")
+    newText("WelcomeText", "Welcome and thank you for participating in this experiment.<br><br>Cognitive scientists often record eye movements to study human behavior, because eye movements tell a lot about how we divide our attention and how we make decisions. Typically, expensive eye-tracking devices are used to record eye movements. The aim of this experiment is to test whether we could also use webcams to achieve this goal. <br><br>The task is very simple and should take roughly 25-30 minutes to complete (there will be a break in the middle). All you have to do is listen to short sentences while four images are presented on your computer screen. Feel free to look anywhere, as long as it is on your computer screen. Your webcam will be used to follow your eye movements on the task. <br><br>We will <b>not</b> collect any video data or any other type of data that may reveal your identity. We only collect data on where on the screen your eyes are looking during the experiment.<br><br>Unfortunately, the experiment may not work for everyone: Sometimes the webcam is not able to pick up your eye movements (for a variety of possible reasons). We will test in a moment whether the experiment works for you. In case it doesn’t, you will be redirected to another experiment in which you will judge English sentences (which doesn't require a webcam). This way, you can still earn your reward on Prolific.<br><br>It is important that you are in a well-lit and quiet environment, otherwise the webcam may not be able to pick up your eye movements. Please turn off any devices or applications that may distract you during this task (such as your mobile phone or your email application) and please close other websites that you may have open.<br><br>If you have any questions about this experiment, feel free to get in touch with me (Mieke Slim) via email: mieke.slim@ugent.be <br><br> If you <b>run into technical difficulties</b> (for instance with the calibration), please email me or send me a message on Prolific! This way, we can find a solution and you'll be able to get your deserved payment on Prolific. <br><br> Press <b>SPACE</b> to continue. <br><br>The next pages will appear in fullscreen. <b>Please do not close the fullscreen for the remainder of this experiment. </b>")
     ,
     newCanvas("InstructionsCanvas", "60vw" , "20vh")
         .add(0,0, getText("WelcomeText"))
@@ -186,7 +194,7 @@ PennController("ProlificID_trial",
 
 // Welcome page 2
 PennController("WebcamSetUp",
-    newText("WebcamSetUpText", "The next pages will help you set up the audio and webcam. The webcam will be set up in a simple calibration procedure. During this calibration, you will see a video of your webcam stream. Again, we will not save any recordings of this video stream. Please make sure your face is fully visible, and that you sit centrally in front of your webcam by following the instructions in the picture below.<br><br>You can start the calibration procedure by clicking on the start button that will appear on the middle of the screen.<br><br>In the calibration procedure, you will see eight buttons on your screen. Please click on all these buttons and follow your cursor closely with your eyes. Once you've clicked on all buttons, a new button will appear in the middle of the screen. Please click on this button and look at it for three seconds so the algorithm can check whether it's well calibrated.<br><br>In case calibration fails, the last step will be repeated. If the calibration procedure fails five times in a row, you will be redirected to another experiment that doesn't require a webcam (so you can still earn your reward on Prolific).<br><br> Press <b>SPACE</b> to continue to the next trial")
+    newText("WebcamSetUpText", "The next pages will help you set up the audio and webcam. The webcam will be set up in a simple calibration procedure. During this calibration, you will see a video of your webcam stream. Again, we will not save any recordings of this video stream. Please make sure your face is fully visible, and that you sit centrally in front of your webcam by following the instructions in the picture below.<br><br>You can start the calibration procedure by clicking on the start button that will appear on the middle of the screen.<br><br>In the calibration procedure, you will see eight buttons on your screen. Please click on all these buttons and follow your cursor closely with your eyes. Once you've clicked on all buttons, a new button will appear in the middle of the screen. Please click on this button and look at it for three seconds so the algorithm can check whether it's well calibrated.<br><br>In case calibration fails, the last step will be repeated. If the calibration procedure fails three times in a row, you will be redirected to another experiment that doesn't require a webcam (so you can still earn your reward on Prolific).<br><br> Press <b>SPACE</b> to continue to the next trial")
     ,
     newImage("Instructions", "Instructions.png")
         .size("60vw")
@@ -207,9 +215,9 @@ PennController("WebcamSetUp",
 // Calibration page
 newTrial("Calibration",  
     newText("NoAttempts", "Attempts left: ")
-        .settings.after( newText("attempts", "5") )
+        .settings.after( newText("attempts", "3") )
     ,
-    newVar("calibrationattempts", 5)
+    newVar("calibrationattempts", 3)
     ,
     getText("attempts") 
         .settings.text( getVar("calibrationattempts") )
@@ -219,8 +227,7 @@ newTrial("Calibration",
         .settings.add("center at 50%", "top at 10%", getText("NoAttempts"))
     ,
     getEyeTracker("tracker")
-        .calibrate(0)
-        .test.score(60)
+        .test.precisionAtLeast(60)
             .failure(
                 getVar("calibrationattempts")
                     .set( v => v-1 ) 
@@ -242,8 +249,7 @@ newTrial("Calibration",
                     .remove()
                 ,
                 getEyeTracker("tracker")
-                    .calibrate()
-                    .test.score(60)
+                    .test.precisionAtLeast(60)
                         .failure(
                             getVar("calibrationattempts")
                                 .set( v => v-1 ) 
@@ -265,66 +271,17 @@ newTrial("Calibration",
                                 .remove()
                             ,
                             getEyeTracker("tracker")
-                                .calibrate()
-                                .test.score(60)
+                                .test.precisionAtLeast(60)
                                     .failure(
-                                        getVar("calibrationattempts")
-                                            .set( v => v-1 ) 
-                                        ,
-                                        getText("attempts") 
-                                            .settings.text( getVar("calibrationattempts")) 
-                                        ,
                                         getCanvas("myCanvas").remove()
                                         ,
-                                        getCanvas("FailedCalibration")
-                                            .print("center at 50%", "top at 40%")
+                                        newText("FailedCalibration5","Unfortunately, the calibration failed again.<br> Please click on this link to be redirected to a related experiment that does not require a webcam:<p><a href='https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html'>https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html</a></p> <br> This way, you can still earn your reward on Prolific. <br>If you have any questions, feel free to contact me via mieke.slim@ugent.be")
+                                            .print("center at 50%", "middle at 50%")
                                         ,
-                                        newButton("Retry")
-                                            .print("center at 50%", "top at 50%")
-                                            .wait(newEyeTracker("tracker").test.ready())
-                                            .remove()
-                                            ,
-                                        getCanvas("FailedCalibration")
-                                            .remove()
-                                        ,
-                                        getEyeTracker("tracker")
-                                            .calibrate()
-                                            .test.score(60)
-                                                .failure(
-                                                    getVar("calibrationattempts")
-                                                        .set( v => v-1 ) 
-                                                    ,
-                                                    getText("attempts") 
-                                                        .settings.text( getVar("calibrationattempts")) 
-                                                    ,
-                                                    getCanvas("myCanvas").remove()
-                                                    ,
-                                                    getCanvas("FailedCalibration")
-                                                        .print("center at 50%", "top at 40%")
-                                                    ,
-                                                    newButton("Retry")
-                                                        .print("center at 50%", "top at 50%")
-                                                        .wait(newEyeTracker("tracker").test.ready())
-                                                        .remove()
-                                                    ,
-                                                    getCanvas("FailedCalibration")
-                                                        .remove()
-                                                    ,
-                                                    getEyeTracker("tracker")
-                                                        .calibrate()
-                                                        .test.score(60)
-                                                            .failure(
-                                                            getCanvas("myCanvas").remove()
-                                                            ,
-                                                            newText("FailedCalibration5","Unfortunately, the calibration failed again. It seems that your webcam is not suitable for this task. Do you want to participate in another task (which doesn't require a webcam), and still earn your reward on Prolific?<br> Please visit this link:<p><a href='https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html'>https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html</a></p> <br> If you do not want to participate in another task, please close the browser (you may ignore pop-up browsers or click on 'leave'). <br>If you have any questions, feel free to contact me via mieke.slim@ugent.be <br> Thank you for your participation!")
-                                                                .print("center at 50%", "middle at 50%")
-                                                            ,
-                                                            newButton("waitforever").wait() // Not printed: wait on this page forever
+                                        newButton("waitforever").wait() // Not printed: wait on this page forever
                                                         ) 
                                                 )    
                                 )
-                            )
-                        )
         )
         .noHeader()
         .setOption("hideProgressBar", true)
@@ -533,7 +490,7 @@ Template("ListA.csv", row =>
         }).call()
         ,
         newEyeTracker("tracker")
-            .calibrate(60)  // Make sure that the tracker is still calibrated
+            .calibrate(50)  // Make sure that the tracker is still calibrated
             .log()  // log the calibration scores
         ,
         defaultImage.size("20vh", "20vh")
@@ -670,7 +627,7 @@ Template("ListB.csv", row =>
         }).call()
         ,
         newEyeTracker("tracker")
-            .calibrate(60)  // Make sure that the tracker is still calibrated
+            .calibrate(50)  // Make sure that the tracker is still calibrated
             .log()  // log the calibration scores
         ,
         defaultImage.size("20vh", "20vh")
