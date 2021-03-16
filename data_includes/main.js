@@ -27,7 +27,7 @@ newTrial("Loading",
         .center()
         .print()
     ,
-    newTimer(2000)
+    newTimer(1500)
         .start()
         .wait()
     ,   
@@ -316,9 +316,7 @@ newTrial("Calibration",
                                                             .failure(
                                                             getCanvas("myCanvas").remove()
                                                             ,
-                                                            SendResults()
-                                                            ,
-                                                            newText("FailedCalibration5","Unfortunately, the calibration failed again. It seems that your webcam is not suitable for this task. Do you want to participate in another task (which doesn't require a webcam), and still earn your reward on Prolific?<br> Please visit this link:<p><a href='https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html'>https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html</a></p> <br> If you do not want to participate in another task, please close the browser (you may ignore pop-up browsers). <br>If you have any questions, feel free to contact me via mieke.slim@ugent.be <br> Thank you for your participation!")
+                                                            newText("FailedCalibration5","Unfortunately, the calibration failed again. It seems that your webcam is not suitable for this task. Do you want to participate in another task (which doesn't require a webcam), and still earn your reward on Prolific?<br> Please visit this link:<p><a href='https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html'>https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html</a></p> <br> If you do not want to participate in another task, please close the browser (you may ignore pop-up browsers or click on 'leave'). <br>If you have any questions, feel free to contact me via mieke.slim@ugent.be <br> Thank you for your participation!")
                                                                 .print("center at 50%", "middle at 50%")
                                                             ,
                                                             newButton("waitforever").wait() // Not printed: wait on this page forever
