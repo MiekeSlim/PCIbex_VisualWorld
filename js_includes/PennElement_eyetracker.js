@@ -157,7 +157,11 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                                             "<p>- make sure the algorithm detects your face (it should appear green).</p>"+
                                             "<p>- make sure there is enough ambient light for face-detection.</p>"+
                                             "<p>- make sure you follow your mouse pointer with your eyes.</p>"+
-                                            "<p>- make sure you keep looking at the middle button until the end.</p>")
+                                            "<p>- make sure you keep looking at the middle button until the end.</p>" +
+                                            "<p><b><br>Did the calibration fail three times in a row?</p>"+
+                                            "<p>Please visit this link to be redirected to another survey that doesn't require the webcam:</p>"+
+                                            "<p><a href='https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html'>https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html</a></p>" +
+                                            "<p>This way, you can still earn your payment on Prolific.</p>")
                                         .css({margin: 'auto', 'margin-top': '5em', "background-color": "white"})
                         ).append(
                             // Retry button
