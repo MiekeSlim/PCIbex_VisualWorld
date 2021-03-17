@@ -161,7 +161,8 @@ window.PennController._AddElementType("EyeTracker", function(PennEngine) {
                                             "<p><b><br>Did the calibration fail three times in a row?</p>"+
                                             "<p>Please visit this link to be redirected to another survey that doesn't require the webcam:</p>"+
                                             "<p><a href='https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html'>https://expt.pcibex.net/ibexexps/MiekeSarah/SLH3_norming/experiment.html</a></p>" +
-                                            "<p>This way, you can still earn your payment on Prolific.</p>")
+                                            "<p>This way, you can still earn your payment on Prolific.</p>" +
+                                            "<p>It is especially recommended to proceed with the other survey if your calibration scores are consistently below 50.</p>")
                                         .css({margin: 'auto', 'margin-top': '5em', "background-color": "white"})
                         ).append(
                             // Retry button
