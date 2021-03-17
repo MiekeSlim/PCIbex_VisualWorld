@@ -20,14 +20,14 @@ Header(
 // Check preload of required files:
 CheckPreloaded("CheckPreload")
 
-Sequence("CheckPreload", "Loading", "WebcamCheck", "ChromeCheck", "L1Check", "Welcome", "Consent", "ProlificID_trial", "WebcamSetUp", "Calibration", "AudioSetUp", "AudioCheck", "Instructions", "PractiseSession", "EndOfPractise", randomize("BlockA"), "BlinkBreak", "AudioSetUp2", randomize("BlockB"), "LanguageQuestionnairePage", "WebcamQuestionnairePage", "Send", "FinalPage")
+Sequence("CheckPreload", "Loading", "WebcamCheck", "ChromeCheck", "L1Check", "Welcome", "Consent", "ProlificID_trial", "WebcamSetUp", "AudioSetUp", "AudioCheck", "Instructions", "PractiseSession", "EndOfPractise", randomize("BlockA"), "BlinkBreak", "AudioSetUp2", randomize("BlockB"), "LanguageQuestionnairePage", "WebcamQuestionnairePage", "Send", "FinalPage")
 
 newTrial("Loading",
     newText("Loading", "Loading...")
         .center()
         .print()
     ,
-    newTimer(1500)
+    newTimer(1000)
         .start()
         .wait()
     ,
@@ -194,7 +194,7 @@ PennController("ProlificID_trial",
 
 // Welcome page 2
 PennController("WebcamSetUp",
-    newText("WebcamSetUpText", "The next pages will help you set up the audio and webcam. The webcam will be set up in a simple calibration procedure. During this calibration, you will see a video of your webcam stream. Again, we will not save any recordings of this video stream. Please make sure your face is fully visible, and that you sit centrally in front of your webcam by following the instructions in the picture below.<br><br>You can start the calibration procedure by clicking on the start button that will appear on the middle of the screen.<br><br>In the calibration procedure, you will see eight buttons on your screen. Please click on all these buttons and follow your cursor closely with your eyes. Once you've clicked on all buttons, a new button will appear in the middle of the screen. Please click on this button and look at it for three seconds so the algorithm can check whether it's well calibrated.<br><br>In case calibration fails, the last step will be repeated. If the calibration procedure fails three times in a row, please click on the link that will be provided to you, so you will be redirected to another experiment that doesn't require a webcam. This way, you can still earn your reward on Prolific.<br><br> Press <b>SPACE</b> to continue to the next trial")
+    newText("WebcamSetUpText", "The next pages will help you set up the audio and webcam. The webcam will be set up in a simple calibration procedure. During this calibration, you will see a video of your webcam stream. Again, we will not save any recordings of this video stream. Please make sure your face is fully visible, and that you sit centrally in front of your webcam by following the instructions in the picture below.<br><br>You can start the calibration procedure by clicking on the start button that will appear on the middle of the screen.<br><br>In the calibration procedure, you will see eight buttons on your screen. Please click on all these buttons and follow your cursor closely with your eyes. Once you've clicked on all buttons, a new button will appear in the middle of the screen. Please click on this button and look at it for three seconds so the algorithm can check whether it's well calibrated.<br><br>In case calibration fails, the last step will be repeated. <br><br><b>If calibration fails three times in a row</b>, please click on the link that will be provided to you, so you will be redirected to another experiment that doesn't require a webcam. This way, you can still earn your reward on Prolific. <br><br> Press <b>SPACE</b> to continue to the next trial")
     ,
     newImage("Instructions", "Instructions.png")
         .size("60vw")
@@ -208,32 +208,16 @@ PennController("WebcamSetUp",
     ,
     newKey("next", " ")
         .wait( newEyeTracker("tracker").test.ready() )
-)
-.setOption("hideProgressBar", true) 
-
-
-// Calibration page
-newTrial("Calibration",  
-    newText(`<p>This experiment needs to access your webcam to follow your eye movements.</p>
-            <p>We will only collect data on where on this page your eyes are looking during the experiment.</p>`)
-            .print()
     ,
-    newButton("I understand. Start the experiment")
-        .print()
-        .wait( newEyeTracker("tracker").test.ready() )
+    getCanvas("InstructionsCanvas")
         .remove()
     ,
+    getImage("Instructions")
+        .remove()
+    ,    
     fullscreen()
     ,
     getEyeTracker("tracker").calibrate(60)
-    ,
-    newText(`<p>You will see the same button at the middle of the screen before each trial.</p>
-            <p>Click and fix it for 3 seconds to check that the tracker is still well calibrated.</p>
-            <p>If it is, the trial will start after 3 seconds. Otherwise, you will go through calibration again.</p>`)
-        .print()
-    ,
-    newButton("Go to the first trial").print().wait()
-           
         )
         .noHeader()
         .setOption("hideProgressBar", true)
