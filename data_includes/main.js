@@ -214,12 +214,25 @@ PennController("WebcamSetUp",
 
 // Calibration page
 newTrial("Calibration",  
-    newText("NoAttempts", "Attempts left: ")
-        .settings.after( newText("attempts", "3") )
+    newText(`<p>This experiment needs to access your webcam to follow your eye movements.</p>
+            <p>We will only collect data on where on this page your eyes are looking during the experiment.</p>`)
+            .print()
     ,
-    getEyeTracker("tracker")
-        .calibrate(60)
-        .log()
+    newButton("I understand. Start the experiment")
+        .print()
+        .wait( newEyeTracker("tracker").test.ready() )
+        .remove()
+    ,
+    fullscreen()
+    ,
+    getEyeTracker("tracker").calibrate(60)
+    ,
+    newText(`<p>You will see the same button at the middle of the screen before each trial.</p>
+            <p>Click and fix it for 3 seconds to check that the tracker is still well calibrated.</p>
+            <p>If it is, the trial will start after 3 seconds. Otherwise, you will go through calibration again.</p>`)
+        .print()
+    ,
+    newButton("Go to the first trial").print().wait()
            
         )
         .noHeader()
