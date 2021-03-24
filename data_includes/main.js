@@ -217,8 +217,9 @@ PennController("WebcamSetUp",
     ,    
     fullscreen()
     ,
-    getEyeTracker("tracker").calibrate(60)
-        )
+    getEyeTracker("tracker")
+        .calibrate(50)
+)
         .noHeader()
         .setOption("hideProgressBar", true)
 
@@ -307,8 +308,8 @@ Template("Practise.csv", row =>
            });
         }).call()
         ,
-        newEyeTracker("tracker")
-            .calibrate(60)  // Make sure that the tracker is still calibrated
+        getEyeTracker("tracker")
+            .calibrate(50)  // Make sure that the tracker is still calibrated
             .log()  // log the calibration scores
         ,
         defaultImage.size("20vh", "20vh")
@@ -359,6 +360,8 @@ Template("Practise.csv", row =>
         newTimer(500).start().wait()
         ,     
         getEyeTracker("tracker").stop() // Stop now to prevent collecting unnecessary data
+        ,
+        newTimer(100).start().wait()
         ,
         fullscreen()
         )
@@ -401,9 +404,29 @@ newTrial("EndOfPractise",
 )
     .setOption("hideProgressBar", true) 
 
+
+
 //Trials: Block A
 Template("ListA.csv", row =>
     newTrial("BlockA",
+        newVar("trialsleft", 36)
+        ,
+        newText("progresstext", " trials untill the break")
+            .before(newText("trials", ""))
+        ,
+        getText("trials")
+            .text(getVar("trialsleft"))
+        ,
+        getText("progresstext")
+            .print("center at 50%", "middle at 50%")
+        ,
+        newTimer(800)
+            .start()
+            .wait()
+        ,
+        getText("progresstext")
+            .remove()
+        ,
         // The callback commands lets us log the X and Y coordinates of the estimated gaze-locations at each recorded moment in time (Thanks to Jeremy Zehr for helping us construct this command)
         newEyeTracker("tracker",1).callback( function (x,y) {
             if (this != getEyeTracker("tracker")._element.elements[0]) return;
@@ -425,8 +448,8 @@ Template("ListA.csv", row =>
            });
         }).call()
         ,
-        newEyeTracker("tracker")
-            .calibrate(60)  // Make sure that the tracker is still calibrated
+        getEyeTracker("tracker")
+            .calibrate(50)  // Make sure that the tracker is still calibrated
             .log()  // log the calibration scores
         ,
         defaultImage.size("20vh", "20vh")
@@ -434,36 +457,36 @@ Template("ListA.csv", row =>
         newVar("TargetPosition")
             .set("Nothing")
         ,
-    images = [row.image1,row.image2,row.image3,row.image4].sort(v=>Math.random()-Math.random())
-    ,
-    newCanvas("image1", "50vw", "50vh")
-      .add("center at 50%", "middle at 50%", newImage(images[0]))
-      .print("center at 25%", "middle at 25%")
-    ,
-    newCanvas("image2", "50vw", "50vh")
-      .add("center at 50%", "middle at 50%", newImage(images[1]))
-      .print("center at 25%", "middle at 75%")
-    ,
-    newCanvas("image3", "50vw", "50vh")
-      .add("center at 50%", "middle at 50%", newImage(images[2]))
-      .print("center at 75%", "middle at 25%")
-    ,
-    newCanvas("image4", "50vw", "50vh")
-      .add("center at 50%", "middle at 50%", newImage(images[3]))
-      .print("center at 75%", "middle at 75%")
-    ,
-    getEyeTracker("tracker")
-        // We track the Canvas: making them bigger allows us to capture look-estimates slightly off the images themselves
-        .add( getCanvas("image1") , getCanvas("image2") , getCanvas("image3") , getCanvas("image4") )
-        .start()
-        .log()  // IMPORTANT: if you don't log, the eye-tracking data will NOT get sent        
-        ,   
-        // Hide the mouse cursor
-        newFunction( ()=>{
-            $("body").css({
-                width: '100vw',
-                height: '100vh',
-                cursor: 'none'
+        images = [row.image1,row.image2,row.image3,row.image4].sort(v=>Math.random()-Math.random())
+        ,
+        newCanvas("image1", "50vw", "50vh")
+          .add("center at 50%", "middle at 50%", newImage(images[0]))
+          .print("center at 25%", "middle at 25%")
+        ,
+        newCanvas("image2", "50vw", "50vh")
+          .add("center at 50%", "middle at 50%", newImage(images[1]))
+          .print("center at 25%", "middle at 75%")
+        ,
+        newCanvas("image3", "50vw", "50vh")
+          .add("center at 50%", "middle at 50%", newImage(images[2]))
+          .print("center at 75%", "middle at 25%")
+        ,
+        newCanvas("image4", "50vw", "50vh")
+          .add("center at 50%", "middle at 50%", newImage(images[3]))
+          .print("center at 75%", "middle at 75%")
+        ,
+        getEyeTracker("tracker")
+            // We track the Canvas: making them bigger allows us to capture look-estimates slightly off the images themselves
+            .add( getCanvas("image1") , getCanvas("image2") , getCanvas("image3") , getCanvas("image4") )
+            .start()
+            .log()  // IMPORTANT: if you don't log, the eye-tracking data will NOT get sent        
+            ,   
+            // Hide the mouse cursor
+            newFunction( ()=>{
+                $("body").css({
+                    width: '100vw',
+                    height: '100vh',
+                    cursor: 'none'
            });
         }).call()
         ,
@@ -477,6 +500,11 @@ Template("ListA.csv", row =>
         newTimer(500).start().wait()
         ,     
         getEyeTracker("tracker").stop() // Stop now to prevent collecting unnecessary data
+        ,
+        newTimer(100).start().wait()
+        ,
+        getVar("trialsLeft")
+            .set( v => v-1 ) 
         ,
         fullscreen()
         )
@@ -514,7 +542,7 @@ PennController("BlinkBreak",
     ,      
     newButton("Take me to the next block (which will appear in fullscreen again)")
         .print("center at 50%", "top at 45%")
-        .wait(newEyeTracker("tracker").test.ready())
+        .wait()
     ,
     fullscreen()
 )
@@ -562,8 +590,8 @@ Template("ListB.csv", row =>
            });
         }).call()
         ,
-        newEyeTracker("tracker")
-            .calibrate(60)  // Make sure that the tracker is still calibrated
+        getEyeTracker("tracker")
+            .calibrate(50)  // Make sure that the tracker is still calibrated
             .log()  // log the calibration scores
         ,
         defaultImage.size("20vh", "20vh")
@@ -614,6 +642,8 @@ Template("ListB.csv", row =>
         newTimer(500).start().wait()
         ,     
         getEyeTracker("tracker").stop() // Stop now to prevent collecting unnecessary data
+        ,
+        newTimer(100).start().wait()
         ,
         fullscreen()
         )
