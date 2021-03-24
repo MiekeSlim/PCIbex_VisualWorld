@@ -20,6 +20,7 @@ Header(
 // Check preload of required files:
 CheckPreloaded("CheckPreload")
 
+
 Sequence("CheckPreload", "Loading", "WebcamCheck", "ChromeCheck", "L1Check", "Welcome", "Consent", "ProlificID_trial", "WebcamSetUp", "AudioSetUp", "AudioCheck", "Instructions", "PractiseSession", "EndOfPractise", randomize("BlockA"), "BlinkBreak", "AudioSetUp2", randomize("BlockB"), "LanguageQuestionnairePage", "WebcamQuestionnairePage", "Send", "FinalPage")
 
 newTrial("Loading",
@@ -223,6 +224,7 @@ PennController("WebcamSetUp",
         .noHeader()
         .setOption("hideProgressBar", true)
 
+
 // Audio set-up
 PennController("AudioSetUp",
     newText("AudioInstructions", "Now that you have set up and calibrated the webcam, let’s set up the audio. In this experiment, you will hear a number of sentences. You can play one of the sentences that will be used in the experiment by clicking the play button below. Please use this audio recording to adjust your volume. Feel free to replay this sentence as often as you need. Once you’re ready, you can go to the next page.")
@@ -405,28 +407,9 @@ newTrial("EndOfPractise",
     .setOption("hideProgressBar", true) 
 
 
-
 //Trials: Block A
 Template("ListA.csv", row =>
     newTrial("BlockA",
-        newVar("trialsleft", 36)
-        ,
-        newText("progresstext", " trials untill the break")
-            .before(newText("trials", ""))
-        ,
-        getText("trials")
-            .text(getVar("trialsleft"))
-        ,
-        getText("progresstext")
-            .print("center at 50%", "middle at 50%")
-        ,
-        newTimer(800)
-            .start()
-            .wait()
-        ,
-        getText("progresstext")
-            .remove()
-        ,
         // The callback commands lets us log the X and Y coordinates of the estimated gaze-locations at each recorded moment in time (Thanks to Jeremy Zehr for helping us construct this command)
         newEyeTracker("tracker",1).callback( function (x,y) {
             if (this != getEyeTracker("tracker")._element.elements[0]) return;
@@ -503,9 +486,6 @@ Template("ListA.csv", row =>
         ,
         newTimer(100).start().wait()
         ,
-        getVar("trialsLeft")
-            .set( v => v-1 ) 
-        ,
         fullscreen()
         )
     .setOption("hideProgressBar", true)
@@ -534,7 +514,7 @@ PennController("BlinkBreak",
            });
         }).call()
     ,     
-    newText("BlinkBreakText", "This was the first block! Feel free to take a five minute break. Please make sure that this break is not much longer than five minutes, so you won't time out on Prolific.<br><br>Click on the button below to continue to the final block of the experiment.<br><br> Make sure you are centrally seated before your webcam and to keep your head still throughout the remainder of this experiment")
+    newText("BlinkBreakText", "This was the first block! Feel free to take a five minute break. Please make sure that this break is not much longer than five minutes, so you won't time out on Prolific.<br><br>Click on the button below to continue to the final block of the experiment.<br><br> Make sure you are centrally seated before your webcam and to keep your head still throughout the remainder of this experiment<br><br>If you fail the calibration in the second block, you will still have the option to go to the other (non-webcam-based) survey. However, <b>please do not click on this link, since you risk timing out</b>. Moreover, since you've been able to get through the first block, you should also be able to go through the second block without technical difficulties.")
     ,           
     newCanvas( "myCanvas", "60vw" , "60vh")
         .settings.add(0,0, getText("BlinkBreakText"))       
